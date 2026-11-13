@@ -1,0 +1,46 @@
+{
+  "root": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+  "plan_sha256": "61454ad0745ecf50fc0d36039570b6fbfd29ee55877a46546af6a7e461f619a5",
+  "start": "2026-11-11T03:39:30.858290+00:00",
+  "end": "2026-11-13T01:47:36.018052+00:00",
+  "boot_id": "3a30893e-9960-40d6-91c1-4266a3310f77",
+  "state": "complete",
+  "active_index": null,
+  "after_index": 965,
+  "interrupted_index": null,
+  "end_kind": "last-observed-boundary",
+  "source_sha256": {
+    "<repo>/results/2026-11-11-v4132-refreeze/round_resume.py": "8bc9d97eb0dcf49ee4195ac94169cbf06b0f954abbad453a88ab7907cbfb9e28",
+    "<repo>/results/2026-11-11-v4132-refreeze/round_merge.py": "6e29820603b8ba6d0d03943060aec15b095a7bd252f9e85f40aa438820e3963a"
+  },
+  "measurement_snapshot_sha256": "2727c5009f183396fc649a8869550c11b17df67eb78947389a13911864e4b893",
+  "controller": {
+    "argv": [
+      "<repo>/bench/compare/matrix.py",
+      "--tree",
+      "<work>/v4106-series",
+      "--binaries",
+      "<repo>/results/2026-11-08-v4109-f34/tools-ackfix",
+      "--kernels",
+      "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels",
+      "--work",
+      "<work>/v412-20261018/vm",
+      "--dest",
+      "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+      "--host-volume",
+      "/mnt/c",
+      "--corpus-image",
+      "<corpus>/eight-apps-20261018-v411.img",
+      "--allow-pressure",
+      "--execute"
+    ],
+    "startup_environment": {
+      "PYTHONPATH": "<repo>/results/2026-11-11-v4132-refreeze/.first-hook-bpgh6ohj:<repo>/results/2026-11-11-v4132-refreeze:",
+      "parent_PYTHONPATH": null,
+      "sitecustomize_file": "<repo>/results/2026-11-11-v4132-refreeze/.first-hook-bpgh6ohj/sitecustomize.py",
+      "propagation": "restore parent PYTHONPATH; remove controller marker",
+      "sitecustomize_sha256": "0cc7ecdf9e8c0cd0253bbc31ed6c6109b742564c856b3376c373831906de42f0"
+    },
+    "hook": "profile-main-entry; original execute retained"
+  }
+}

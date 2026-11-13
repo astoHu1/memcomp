@@ -1,0 +1,51 @@
+{
+  "sources": {
+    "<repo>/bench/compare/telemetry.py": "889e0046e353d0af81244ae368e776eddaae441bb429925981518a2c046bac11",
+    "<repo>/bench/compare/shmem.c": "2785b01acbcd75ebefd04d9cf90a514677e81e28c00bcc9079478f055e39858b",
+    "<repo>/bench/compare/summarize_j4.py": "4003875db08fafdb3edb494d16fa925d007755c1c41eb496ed9d36027a955534",
+    "<repo>/bench/compare/matrix.py": "fe9aa66d27fd65ab824a8cb1b0577d4f0a0020c94a1430690558ce040694bf29",
+    "<repo>/bench/compare/summarize.py": "d9adfec32c4f0d420505f1098913da8ddeaec3277f6842fbd777453110f3d8b2",
+    "<repo>/bench/compare/prime.py": "e1ed082b51f18762e76b203dca008a124bb2f41d788fbd6ae74cf97dbce85079",
+    "<repo>/bench/compare/corpus.h": "46c9c66451f00daa7812886bcf3fb570aa653290e3013df923d22ed519d3e720",
+    "<repo>/bench/compare/common.h": "5585175e87c407b8b98f52751c43049672814826c7f0ff03918f2c45d415df81",
+    "<repo>/bench/compare/guest.c": "edf0e528ae3d90a8b8b7a48e1763e8fe97e0f8b73fdbf629e37e1fef8180a0f8",
+    "<repo>/bench/compare/refault.c": "30f575fc9e5d1ac7204d60d7ebab3057021ede69ff740cf7ef8b9f5dfaf1e58c",
+    "<repo>/bench/compare/build.py": "e8561fa4f7ca9355c5ef41ef71c751478918d3028ee525e5b78af1acfb8c1cc9",
+    "<repo>/bench/compare/app_switch.c": "3dfc47e4148b1ab1337434bb0941b37c55ed189c41af2bb3197c9a88a7e037f1",
+    "<repo>/bench/compare/mkinitramfs.py": "ca249e0113f68502311ce5504ade00cc51d20d1a15608cb56976a9964d40a61c",
+    "<repo>/bench/compare/pageout.py": "09c7de13af98ecf94471ce5de112380327fc48a8a46b5626f28aa7dee260db67",
+    "<repo>/bench/compare/run.py": "2ae299eb319fac6e1c35fd47cd321ca34be32527b4fee654a34b899269320941",
+    "<repo>/bench/compare/memory_account.py": "23c0b372d2ba282fd8427685003093461b4babd8d1766d3bff99a50141a71483",
+    "<repo>/bench/compare/memory_cohort.py": "fa62dbce06f6bed69c12fcff55cd3af11114d6f41f40ae197624437995a659f3",
+    "<repo>/bench/compare/Makefile": "b2042c1356621f6b1d8b5bb542ec8cbc5f79316e75204988dac97479181d1291",
+    "<work>/v4106-series/usr/gen_init_cpio.c": "309cab96d2b43133a0758f165fbcf9cc1b671623555ef8dadd9983095c462345",
+    "<repo>/bench/e2e/tests/run_e2e_qemu.py": "a5f59168c0dc425f86fbbbf7d26e01f333be6c69d7973c09ff937da1008993c3"
+  },
+  "workload_source_hashes": {
+    "telemetry.py": "889e0046e353d0af81244ae368e776eddaae441bb429925981518a2c046bac11",
+    "shmem.c": "2785b01acbcd75ebefd04d9cf90a514677e81e28c00bcc9079478f055e39858b",
+    "summarize_j4.py": "4003875db08fafdb3edb494d16fa925d007755c1c41eb496ed9d36027a955534",
+    "matrix.py": "fe9aa66d27fd65ab824a8cb1b0577d4f0a0020c94a1430690558ce040694bf29",
+    "summarize.py": "d9adfec32c4f0d420505f1098913da8ddeaec3277f6842fbd777453110f3d8b2",
+    "prime.py": "e1ed082b51f18762e76b203dca008a124bb2f41d788fbd6ae74cf97dbce85079",
+    "corpus.h": "46c9c66451f00daa7812886bcf3fb570aa653290e3013df923d22ed519d3e720",
+    "common.h": "5585175e87c407b8b98f52751c43049672814826c7f0ff03918f2c45d415df81",
+    "guest.c": "edf0e528ae3d90a8b8b7a48e1763e8fe97e0f8b73fdbf629e37e1fef8180a0f8",
+    "refault.c": "30f575fc9e5d1ac7204d60d7ebab3057021ede69ff740cf7ef8b9f5dfaf1e58c",
+    "build.py": "e8561fa4f7ca9355c5ef41ef71c751478918d3028ee525e5b78af1acfb8c1cc9",
+    "app_switch.c": "3dfc47e4148b1ab1337434bb0941b37c55ed189c41af2bb3197c9a88a7e037f1",
+    "mkinitramfs.py": "ca249e0113f68502311ce5504ade00cc51d20d1a15608cb56976a9964d40a61c",
+    "pageout.py": "09c7de13af98ecf94471ce5de112380327fc48a8a46b5626f28aa7dee260db67",
+    "run.py": "2ae299eb319fac6e1c35fd47cd321ca34be32527b4fee654a34b899269320941",
+    "memory_account.py": "23c0b372d2ba282fd8427685003093461b4babd8d1766d3bff99a50141a71483",
+    "memory_cohort.py": "fa62dbce06f6bed69c12fcff55cd3af11114d6f41f40ae197624437995a659f3"
+  },
+  "qemu_helper_sha256": "a5f59168c0dc425f86fbbbf7d26e01f333be6c69d7973c09ff937da1008993c3",
+  "binaries": {
+    "guest": "c842acff44d4de9b6afbacf96bd062de52ccab47416cbae762f57dd265d23147",
+    "refault": "8387f9888b13da9f8678f1700e5c0f616b321afae04b4ad46ec95e3a2b6b32c6",
+    "shmem": "d4148f88ab83301d70747bac55aa62a7888391831a8d1551b39b86409b533e4e",
+    "app_switch": "c7f60d50486e5f86702b306e30f557fa2a6d9e4c2bd6176770ee64c7e021d293",
+    "gen_init_cpio": "3bc5064df5d7ca3ebff46ea19574d1d56554b7e350d590ba7614acc1222d95dd"
+  }
+}

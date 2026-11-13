@@ -1,0 +1,15 @@
+format=memcomp-device-build-v1
+target=mcbench
+arch=aarch64
+compiler=aarch64-linux-gnu-gcc
+compiler_version=13.3.0
+compiler_target=aarch64-linux-gnu
+compiler_sha256=cd90adc7801f4595267f61a5d25bd3a0c6beb2f9f1f107ab919a97a12972dc9a
+cflags=-O2 -g0 -std=gnu11 -Wall -Wextra -Werror
+cppflags=
+ldflags=-static
+ldlibs=
+path_operands=package-relative labels; external source directory omitted
+input_sha256=dea9977feb2999ccec5310e1bb6cb298bdf4fd9d361100bdea9ce4d6cc4e6382  build.sh
+input_sha256=20e1e8eb5d2090fb4dba985a0bf16c8af8eabd23bc63a0b74ebd83b3280af5e1  src/bench_init.c
+output_sha256=c294614d3513912c26fb0c4e5b5e2ed7c2919d658c495840d09379935f235278  bin/mcbench

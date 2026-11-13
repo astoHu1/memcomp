@@ -1,0 +1,31 @@
+{
+  "large_files": [
+    {
+      "path": "<repo>/results/2026-11-11-v4132-refreeze/post-965-summary/summary.csv",
+      "bytes": 112227465,
+      "sha256": "af05039ba328a4bc3e30528bbb1529339085c3f57236f142ccaa47df4ab429d6",
+      "copied": false
+    },
+    {
+      "path": "<repo>/results/2026-11-11-v4132-refreeze/post-965-summary/per-guest.csv",
+      "bytes": 1636762926,
+      "sha256": "1f52124ff1ec75bcd84135e036ff5e7cab10a9c44f90ec3b2c0a26024d9ab69c",
+      "copied": false
+    },
+    {
+      "path": "<repo>/results/2026-11-11-v4132-refreeze/post-965-summary/per-round.csv",
+      "bytes": 9889783808,
+      "sha256": "4b3cad6e582a44310315e50c15103e8bf56a351da2becd595b5c435b03988e59",
+      "copied": false
+    }
+  ],
+  "formal_directory": {
+    "path": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "file_count": 5796,
+    "bytes": 7751705949,
+    "copied": false,
+    "sha256": "4382b1061a0b9bdda0f47e75fada27997cdc1debadf538bf96c1754e65b008d3",
+    "sha256_definition": "SHA256 of UTF-8 formal-965-files.sha256: sorted relative-path records, each SHA256 two spaces decimal bytes two spaces path newline",
+    "file_manifest": "formal-965-files.sha256"
+  }
+}

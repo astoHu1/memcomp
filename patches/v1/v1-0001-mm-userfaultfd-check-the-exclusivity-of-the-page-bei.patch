@@ -1,0 +1,64 @@
+From a754d0411599f1d3f508246989cead92edad8502 Mon Sep 17 00:00:00 2001
+From: nakixii <nakixii@gmail.com>
+Date: Thu, 5 Nov 2026 17:11:36 +0800
+Subject: [RFC PATCH 01/16] mm: userfaultfd: check the exclusivity of the page
+ being moved
+
+UFFDIO_MOVE checks PageAnonExclusive on the first page of the source
+folio even when the source PTE maps another page of that folio. This can
+reject a move whose mapped page is still exclusive.
+
+try_to_unmap_one() can replace earlier pages with swap entries before
+folio_try_share_anon_rmap_pte() refuses a later page, for example
+because of a concurrent GUP-fast pin. The first page can then lose its
+exclusive flag while a later mapped page remains exclusive. Checking the
+first page incorrectly returns -EBUSY for a move of that later page.
+
+Look up the page mapped by the source PTE, check that page's exclusive
+flag and derive the folio from it. Preserve the existing folio locking,
+reference counting and split handling. This applies to ordinary swap
+unmapping without requiring an additional page-storage backend.
+
+Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
+
+Assisted-by: LLM
+Signed-off-by: nakixii <nakixii@gmail.com>
+---
+ mm/userfaultfd.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/mm/userfaultfd.c b/mm/userfaultfd.c
+index 080a00d916f6b696ef326b6e76e205970a94fa8b..d8a699981d097ae393a981a33cede5f5ce6e2725 100644
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1225,6 +1225,7 @@ static int move_pages_pte(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd,
+ 		 */
+ 		if (!src_folio) {
+ 			struct folio *folio;
++			struct page *page;
+ 			bool locked;
+ 
+ 			/*
+@@ -1238,8 +1239,20 @@ static int move_pages_pte(struct mm_struct *mm, pmd_t *dst_pmd, pmd_t *src_pmd,
+ 				goto out;
+ 			}
+ 
+-			folio = vm_normal_folio(src_vma, src_addr, orig_src_pte);
+-			if (!folio || !PageAnonExclusive(&folio->page)) {
++			/*
++			 * Check the page to be moved, not the first of its
++			 * folio.  try_to_unmap() unshares a large folio page
++			 * by page into swap entries, so while
++			 * reclaim holds it, or after reclaim gave up partway,
++			 * the first page can have lost its exclusive flag
++			 * when this one has not.  While reclaim still holds
++			 * the folio, the trylock below sends a large one back
++			 * with -EAGAIN; once the folio is split they are the
++			 * same.
++			 */
++			page = vm_normal_page(src_vma, src_addr, orig_src_pte);
++			folio = page ? page_folio(page) : NULL;
++			if (!folio || !PageAnonExclusive(page)) {
+ 				spin_unlock(src_ptl);
+ 				err = -EBUSY;
+ 				goto out;

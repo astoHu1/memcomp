@@ -1,0 +1,4 @@
+SPDX-License-Identifier: GPL-2.0-only
+
+The license of w4_source_split.py is recorded here instead of in a header
+because results/formal-965/W4-source-split.json pins the script's SHA256.

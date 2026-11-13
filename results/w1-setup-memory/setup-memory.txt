@@ -1,0 +1,29 @@
+group boots field median_kib min_kib max_kib  (MemFree: loss; others: growth)
+zram-lz4 80 MemFree 11028 8840 16464
+zram-lz4 80 VmallocUsed 8780 8780 8780
+zram-lz4 80 Slab 332 272 456
+zram-zstd 80 MemFree 15936 8984 16460
+zram-zstd 80 VmallocUsed 9108 9108 9108
+zram-zstd 80 Slab 428 372 584
+zram-writeback-zstd 80 MemFree 16008 9008 16576
+zram-writeback-zstd 80 VmallocUsed 9108 9108 9108
+zram-writeback-zstd 80 Slab 504 440 620
+memcomp-noswap-lz4 80 MemFree 0 0 288
+memcomp-noswap-lz4 80 VmallocUsed 0 0 0
+memcomp-noswap-lz4 80 Slab 206 140 288
+memcomp-noswap-zstd 80 MemFree 0 0 204
+memcomp-noswap-zstd 80 VmallocUsed 0 0 0
+memcomp-noswap-zstd 80 Slab 156 136 280
+memcomp-swap-lz4 80 MemFree 1838 620 2120
+memcomp-swap-lz4 80 VmallocUsed 516 516 516
+memcomp-swap-lz4 80 Slab 300 220 416
+memcomp-swap-zstd 80 MemFree 128 72 1892
+memcomp-swap-zstd 80 VmallocUsed 516 516 516
+memcomp-swap-zstd 80 Slab 284 224 416
+zswap-zstd 80 MemFree 854 0 2028
+zswap-zstd 80 VmallocUsed 516 516 516
+zswap-zstd 80 Slab 300 224 376
+
+W1 window (seq fill -> drained), per-app median of paired per-round differences, MiB
+memcomp-noswap-lz4 - zram-lz4 chrome=1.12 discord=1.36 netease_music=1.53 qq=1.22 system_server=1.05 systemui=1.31 telegram=1.21 wechat=1.26 range 1.05..1.53
+memcomp-noswap-zstd - zram-zstd chrome=1.11 discord=1.32 netease_music=1.32 qq=1.36 system_server=1.07 systemui=1.55 telegram=1.37 wechat=1.22 range 1.07..1.55

@@ -1,0 +1,22 @@
+format=memcomp-device-build-v1
+target=compare
+arch=aarch64
+compiler=aarch64-linux-gnu-gcc
+compiler_version=13.3.0
+compiler_target=aarch64-linux-gnu
+compiler_sha256=cd90adc7801f4595267f61a5d25bd3a0c6beb2f9f1f107ab919a97a12972dc9a
+cflags=-O2 -g0 -std=gnu11 -Wall -Wextra -Werror -Wformat=2 -Wshadow
+cppflags=
+ldflags=-static
+ldlibs=
+path_operands=package-relative labels; external source directory omitted
+input_sha256=dea9977feb2999ccec5310e1bb6cb298bdf4fd9d361100bdea9ce4d6cc4e6382  build.sh
+input_sha256=b2042c1356621f6b1d8b5bb542ec8cbc5f79316e75204988dac97479181d1291  ../bench/compare/Makefile
+input_sha256=5585175e87c407b8b98f52751c43049672814826c7f0ff03918f2c45d415df81  ../bench/compare/common.h
+input_sha256=46c9c66451f00daa7812886bcf3fb570aa653290e3013df923d22ed519d3e720  ../bench/compare/corpus.h
+input_sha256=454d06e6b184184e56a9198064360b52ecc5b185e69d49cb4495cea6497b690d  ../bench/compare/refault.c
+input_sha256=2785b01acbcd75ebefd04d9cf90a514677e81e28c00bcc9079478f055e39858b  ../bench/compare/shmem.c
+input_sha256=3dfc47e4148b1ab1337434bb0941b37c55ed189c41af2bb3197c9a88a7e037f1  ../bench/compare/app_switch.c
+output_sha256=012b128819b34bc3ef42ffb27a48a664affecb82bbd75c83676a162f9e84d11a  bin/refault
+output_sha256=c6a5e5edb8ecaa26d8a5f27924c13ba699f2c0fbddaed8cfb9f22e24a8f70e5c  bin/shmem
+output_sha256=4f2f92bd7e5f90c7007b43f58fa2f258f0828335768ba9eb3225bebce7a99cf0  bin/app_switch

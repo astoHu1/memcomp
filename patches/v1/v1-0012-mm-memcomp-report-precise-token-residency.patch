@@ -1,0 +1,331 @@
+From b9cc5776ca80c83357be5cafb3f0b4c6910da898 Mon Sep 17 00:00:00 2001
+From: nakixii <nakixii@gmail.com>
+Date: Tue, 10 Nov 2026 05:29:47 +0800
+Subject: [RFC PATCH 12/16] mm: memcomp: report precise token residency
+
+Report whether a token can satisfy a read without I/O for anonymous and
+shmem mappings, including each base page of a large folio. Query backing
+swap-cache uptodate state without reading, decompressing or consuming
+a shadow. Drop PTL and XArray locks around the query and revalidate.
+
+Preserve each base kernel's native syscall and page-size handling.
+Add test-only query seams with the KUnit patch, not this production
+step.
+
+Assisted-by: LLM
+Signed-off-by: nakixii <nakixii@gmail.com>
+---
+ include/linux/memcomp.h |   7 +++
+ mm/memcomp.c            |   1 +
+ mm/memcomp/api.h        |   5 ++
+ mm/memcomp/mincore.h    |  77 +++++++++++++++++++++++++++++
+ mm/mincore.c            | 104 +++++++++++++++++++++++++++++++++++++++-
+ mm/swap_state.c         |   5 ++
+ 6 files changed, 198 insertions(+), 1 deletion(-)
+ create mode 100644 mm/memcomp/mincore.h
+
+diff --git a/include/linux/memcomp.h b/include/linux/memcomp.h
+index 8248a44bbb57a9e98afe29cc0e0599ca9f6bc988..f992a5e716fc6dc59b75072e6bed41eb4454e083 100644
+--- a/include/linux/memcomp.h
++++ b/include/linux/memcomp.h
+@@ -45,6 +45,8 @@ enum memcomp_anon_fail_event {
+ #ifdef CONFIG_MEMCOMP
+ 
+ bool memcomp_available(void);
++/* Process context only, with no PTL or XArray lock held. */
++bool memcomp_mincore(unsigned long token);
+ bool memcomp_release_folio_reclaim(struct folio *folio,
+ 				   struct mem_cgroup *target_memcg);
+ void memcomp_publish_cache_eviction(struct folio *folio, struct memcomp_ref *ref);
+@@ -191,6 +193,11 @@ unsigned long memcomp_shadow_token(void *shadow);
+ 
+ #else
+ 
++static inline bool memcomp_mincore(unsigned long token)
++{
++	return false;
++}
++
+ static inline bool memcomp_available(void)
+ {
+ 	return false;
+diff --git a/mm/memcomp.c b/mm/memcomp.c
+index 01254bf22c8834dc61d731cf5f776cb77cd9c908..a246c801910b72a5084d4db17d4183e0d69bb958 100644
+--- a/mm/memcomp.c
++++ b/mm/memcomp.c
+@@ -3903,6 +3903,7 @@ static bool memcomp_writeback_defrag_pass(void)
+  * Core load - decompress one page from @entry into @dst.  Sleeps on the
+  * token lock and possibly swap IO; never called under the PTE lock.
+  */
++#include "memcomp/mincore.h"
+ #include "memcomp/workingset_load.h"
+ #include "memcomp/load.h"
+ #include "memcomp/consumers.h"
+diff --git a/mm/memcomp/api.h b/mm/memcomp/api.h
+index b73bde6c3d976f05bbe3ff35ecd57bf82f58f789..47946253497046eae4c01b230fafc5f2e6dc1623 100644
+--- a/mm/memcomp/api.h
++++ b/mm/memcomp/api.h
+@@ -39,6 +39,11 @@ void memcomp_invalidate_cache(unsigned long token)
+ 	mc16_cache_drop(token);
+ }
+ 
++bool memcomp_mincore(unsigned long token)
++{
++	return mc16_mincore(token);
++}
++
+ bool memcomp_entry_present(unsigned long token)
+ {
+ 	return mc16_entry_present(token);
+diff --git a/mm/memcomp/mincore.h b/mm/memcomp/mincore.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..ebba2424b65ef4f0ce5fba1892c6728f43a346b8
+--- /dev/null
++++ b/mm/memcomp/mincore.h
+@@ -0,0 +1,77 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef _MM_MEMCOMP_MINCORE_H
++#define _MM_MEMCOMP_MINCORE_H
++
++#include <linux/pagemap.h>
++#include <linux/swap.h>
++
++/* Include after storage/access/refs and the memcomp_slot_* helpers. */
++#ifdef CONFIG_SWAP
++static struct folio *mc16_mincore_swap_folio(swp_entry_t swap)
++{
++	struct swap_info_struct *si;
++	struct folio *folio;
++
++	si = get_swap_device(swap);
++	if (!si)
++		return ERR_PTR(-ENOENT);
++	/* No allocation, read, readahead or swap-cache hit accounting. */
++	folio = filemap_get_folio(swap_address_space(swap), swap_cache_index(swap));
++	put_swap_device(si);
++	return folio;
++}
++#endif
++
++/* Process context only: the caller pins its PTE/XA owner across this query. */
++static inline bool mc16_mincore(unsigned long token)
++{
++	struct memcomp_ref ref;
++	struct mc16_view view;
++	unsigned int state;
++	bool present = false;
++#ifdef CONFIG_SWAP
++	struct mc16_swap_fields fields;
++	struct folio *folio;
++	swp_entry_t swap = { };
++#endif
++
++	might_sleep();
++	if (!token)
++		return true;
++	if (!mc16_get(token, &ref))
++		return false;
++	mutex_lock(memcomp_lock_of(token));
++	if (!mc16_view_locked(&ref, &view) || !mc16_flags_valid(*view.flags))
++		goto unlock;
++	state = mc16_flags_state(*view.flags);
++	if ((*view.flags & MC16_F_RESIDENT) || state == MC16_PENDING ||
++	    state == MC16_STORED || state == MC16_WRITEBACK ||
++	    state == MC16_SAMEFILL) {
++		present = true;
++		goto unlock;
++	}
++#ifdef CONFIG_SWAP
++	if (state == MC16_SWAPPED &&
++	    mc16_swap_decode(*view.word, *view.length, &fields)) {
++		swap = swp_entry(fields.type, fields.swap_offset);
++		/* A token guard alone does not pin a backing changed by swapoff. */
++		if (!swap.val || memcomp_slot_dup(swap))
++			swap.val = 0;
++	}
++#endif
++unlock:
++	mutex_unlock(memcomp_lock_of(token));
++#ifdef CONFIG_SWAP
++	if (swap.val) {
++		folio = mc16_mincore_swap_folio(swap);
++		if (!IS_ERR_OR_NULL(folio)) {
++			present = folio_test_uptodate(folio);
++			folio_put(folio);
++		}
++		memcomp_slot_put(swap);
++	}
++#endif
++	mc16_ref_put(&ref);
++	return present;
++}
++#endif /* _MM_MEMCOMP_MINCORE_H */
+diff --git a/mm/mincore.c b/mm/mincore.c
+index d6bd19e520fcfb9389e6825eefd72d0b51ad2969..17e8d7a5b316edcfb13d72242767eea662a559dd 100644
+--- a/mm/mincore.c
++++ b/mm/mincore.c
+@@ -18,7 +18,7 @@
+ #include <linux/shmem_fs.h>
+ #include <linux/hugetlb.h>
+ #include <linux/pgtable.h>
+-
++#include <linux/memcomp.h>
+ #include <linux/uaccess.h>
+ #include "swap.h"
+ 
+@@ -49,6 +49,35 @@ static int mincore_hugetlb(pte_t *pte, unsigned long hmask, unsigned long addr,
+  * and is up to date; i.e. that no page-in operation would be required
+  * at this time if an application were to map and access this page.
+  */
++#ifdef CONFIG_MEMCOMP
++/* The XA guard, not the unreferenced value returned by filemap, pins token. */
++static int mincore_memcomp_page(struct address_space *mapping, pgoff_t index)
++{
++	struct memcomp_ref ref = { };
++	unsigned long token;
++	void *entry;
++	bool pinned, stable;
++	int present;
++
++	xa_lock_irq(&mapping->i_pages);
++	entry = xa_load(&mapping->i_pages, index);
++	if (!is_memcomp_shadow(entry)) {
++		xa_unlock_irq(&mapping->i_pages);
++		return -EAGAIN;
++	}
++	token = memcomp_shadow_token(entry);
++	pinned = !token || memcomp_entry_get_ref(token, &ref);
++	xa_unlock_irq(&mapping->i_pages);
++
++	present = pinned && memcomp_mincore(token);
++	xa_lock_irq(&mapping->i_pages);
++	stable = xa_load(&mapping->i_pages, index) == entry;
++	xa_unlock_irq(&mapping->i_pages);
++	memcomp_entry_put_ref(&ref);
++	return stable ? present : -EAGAIN;
++}
++#endif
++
+ static unsigned char mincore_page(struct address_space *mapping, pgoff_t index)
+ {
+ 	unsigned char present = 0;
+@@ -60,7 +89,21 @@ static unsigned char mincore_page(struct address_space *mapping, pgoff_t index)
+ 	 * any other file mapping (ie. marked !present and faulted in with
+ 	 * tmpfs's .fault). So swapped out tmpfs mappings are tested here.
+ 	 */
++#ifdef CONFIG_MEMCOMP
++again:
++#endif
+ 	folio = filemap_get_incore_folio(mapping, index);
++#ifdef CONFIG_MEMCOMP
++	if (folio == ERR_PTR(-EEXIST)) {
++		int ret = mincore_memcomp_page(mapping, index);
++
++		if (ret < 0) {
++			cond_resched();
++			goto again;
++		}
++		return ret;
++	}
++#endif
+ 	if (!IS_ERR(folio)) {
+ 		present = folio_test_uptodate(folio);
+ 		folio_put(folio);
+@@ -97,6 +140,41 @@ static int mincore_unmapped_range(unsigned long addr, unsigned long end,
+ 	return 0;
+ }
+ 
++#ifdef CONFIG_MEMCOMP
++/* Enter with PTL held; return with a fresh mapping, or NULL for ACTION_AGAIN. */
++static int mincore_memcomp_pte(pmd_t *pmd, unsigned long addr,
++			       struct mm_walk *walk, pte_t orig,
++			       pte_t **ptepp, spinlock_t **ptlp)
++{
++	struct memcomp_ref ref = { };
++	bool compressed = is_swap_pte(orig) &&
++		is_memcomp_entry(pte_to_swp_entry(orig));
++	unsigned long token = compressed ? swp_offset(pte_to_swp_entry(orig)) : 0;
++	bool pinned = true, stable;
++	unsigned char present = 0;
++
++	if (compressed && token)
++		pinned = memcomp_entry_get_ref(token, &ref);
++	pte_unmap_unlock(*ptepp, *ptlp);
++	if (compressed)
++		present = pinned && memcomp_mincore(token);
++	else
++		__mincore_unmapped_range(addr, addr + PAGE_SIZE, walk->vma, &present);
++
++	*ptepp = pte_offset_map_lock(walk->mm, pmd, addr, ptlp);
++	stable = *ptepp && pte_same(ptep_get(*ptepp), orig);
++	if (*ptepp)
++		pte_unmap_unlock(*ptepp, *ptlp);
++	/* A changed PTE may have dropped the last owner: put outside PTL. */
++	memcomp_entry_put_ref(&ref);
++	if (!*ptepp)
++		return -EAGAIN;
++	/* The first validation is the snapshot; do not retain a stale ptep. */
++	*ptepp = pte_offset_map_lock(walk->mm, pmd, addr, ptlp);
++	return stable ? present : -EAGAIN;
++}
++#endif
++
+ static int mincore_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
+ 			struct mm_walk *walk)
+ {
+@@ -119,8 +197,29 @@ static int mincore_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
+ 		return 0;
+ 	}
+ 	for (; addr != end; ptep++, addr += PAGE_SIZE) {
++#ifdef CONFIG_MEMCOMP
++again:
++		;
++#endif
+ 		pte_t pte = ptep_get(ptep);
+ 
++#ifdef CONFIG_MEMCOMP
++		if ((is_swap_pte(pte) && is_memcomp_entry(pte_to_swp_entry(pte))) ||
++		    (pte_none_mostly(pte) && vma->vm_file &&
++		     shmem_mapping(vma->vm_file->f_mapping))) {
++			int ret = mincore_memcomp_pte(pmd, addr, walk, pte, &ptep, &ptl);
++
++			if (!ptep) {
++				walk->action = ACTION_AGAIN;
++				return 0;
++			}
++			if (ret < 0)
++				goto again;
++			*vec = ret;
++			goto next;
++		}
++#endif
++
+ 		/* We need to do cache lookup too for pte markers */
+ 		if (pte_none_mostly(pte))
+ 			__mincore_unmapped_range(addr, addr + PAGE_SIZE,
+@@ -146,6 +245,9 @@ static int mincore_pte_range(pmd_t *pmd, unsigned long addr, unsigned long end,
+ #endif
+ 			}
+ 		}
++#ifdef CONFIG_MEMCOMP
++next:
++#endif
+ 		vec++;
+ 	}
+ 	pte_unmap_unlock(ptep - 1, ptl);
+diff --git a/mm/swap_state.c b/mm/swap_state.c
+index 4669f29cf555748c9c3245a370a613dbfca37d76..f955f67502f503730864c34bf1711c9d4ecb5a10 100644
+--- a/mm/swap_state.c
++++ b/mm/swap_state.c
+@@ -416,6 +416,11 @@ struct folio *filemap_get_incore_folio(struct address_space *mapping,
+ 		return ERR_PTR(-ENOENT);
+ 
+ 	swp = radix_to_swp_entry(folio);
++#ifdef CONFIG_MEMCOMP
++	/* A compressed value is not a folio; mincore queries it outside PTL. */
++	if (is_memcomp_entry(swp))
++		return ERR_PTR(-EEXIST);
++#endif
+ 	/* There might be swapin error entries in shmem mapping. */
+ 	if (non_swap_entry(swp))
+ 		return ERR_PTR(-ENOENT);

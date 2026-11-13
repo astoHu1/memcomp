@@ -1,0 +1,35 @@
+{
+  "segments": [
+    {
+      "root": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+      "rounds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "start": "2026-11-11T03:39:30.858290+00:00",
+      "end": "2026-11-13T01:47:36.018052+00:00",
+      "boot_id": "3a30893e-9960-40d6-91c1-4266a3310f77"
+    }
+  ],
+  "round_roots": {
+    "1": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "2": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "3": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "4": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "5": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "6": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "7": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "8": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "9": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "10": "<repo>/results/2026-11-11-v4132-refreeze/formal-965"
+  },
+  "planned_boots": 965
+}

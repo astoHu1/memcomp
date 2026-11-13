@@ -1,0 +1,92 @@
+[
+  {
+    "group": "memcomp-noswap-lz4",
+    "artifact": "memcomp",
+    "source_head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+    "source_tree": "4a25cd2f2b176663e3b3323dbf307c8842ad1713",
+    "config_sha256": "d4191923749839e22d61f3d6328acf51d30e1a7fc70352ee52d492be4697e695",
+    "kernel_sha256": "bad7b08b92f09ebf9ee98baebb83c7a555643a8cb8390d5557aef098da847b48",
+    "config": "inputs/configs/memcomp-noswap-lz4/.config"
+  },
+  {
+    "group": "memcomp-noswap-zstd",
+    "artifact": "memcomp",
+    "source_head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+    "source_tree": "4a25cd2f2b176663e3b3323dbf307c8842ad1713",
+    "config_sha256": "d4191923749839e22d61f3d6328acf51d30e1a7fc70352ee52d492be4697e695",
+    "kernel_sha256": "bad7b08b92f09ebf9ee98baebb83c7a555643a8cb8390d5557aef098da847b48",
+    "config": "inputs/configs/memcomp-noswap-zstd/.config"
+  },
+  {
+    "group": "memcomp-swap-lz4",
+    "artifact": "memcomp",
+    "source_head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+    "source_tree": "4a25cd2f2b176663e3b3323dbf307c8842ad1713",
+    "config_sha256": "d4191923749839e22d61f3d6328acf51d30e1a7fc70352ee52d492be4697e695",
+    "kernel_sha256": "bad7b08b92f09ebf9ee98baebb83c7a555643a8cb8390d5557aef098da847b48",
+    "config": "inputs/configs/memcomp-swap-lz4/.config"
+  },
+  {
+    "group": "memcomp-swap-zstd",
+    "artifact": "memcomp",
+    "source_head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+    "source_tree": "4a25cd2f2b176663e3b3323dbf307c8842ad1713",
+    "config_sha256": "d4191923749839e22d61f3d6328acf51d30e1a7fc70352ee52d492be4697e695",
+    "kernel_sha256": "bad7b08b92f09ebf9ee98baebb83c7a555643a8cb8390d5557aef098da847b48",
+    "config": "inputs/configs/memcomp-swap-zstd/.config"
+  },
+  {
+    "group": "swap-none",
+    "artifact": "swap",
+    "source_head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+    "source_tree": "f5156fb777b397bb064b1954b36ba08abfaea645",
+    "config_sha256": "5947a41c4a75c66bd72e032d6a407222cb96f82cb6635a235d44f9d689e34fd9",
+    "kernel_sha256": "3c6efd648e459689464dd8d25bd29580d56b4dcda4fff6aef8257af268568c7f",
+    "config": "inputs/configs/swap-none/.config"
+  },
+  {
+    "group": "zram-lz4",
+    "artifact": "zram",
+    "source_head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+    "source_tree": "f5156fb777b397bb064b1954b36ba08abfaea645",
+    "config_sha256": "18472c8fce42194dc4728d068055c707e7c07e4f619d48dc72209149e8be7a2c",
+    "kernel_sha256": "ce3154766a3f954a37c7242543e81402256dbdbbfa6296165a26cf1d226cf72b",
+    "config": "inputs/configs/zram-lz4/.config"
+  },
+  {
+    "group": "zram-writeback-zstd",
+    "artifact": "zram-writeback",
+    "source_head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+    "source_tree": "f5156fb777b397bb064b1954b36ba08abfaea645",
+    "config_sha256": "2da6934e42f025aee2bb69a9b4e793620fac584dbed9a56778247f38eb0dbfb3",
+    "kernel_sha256": "9093f6c3435705bd03cb5bd1940d5fe611f56567b69ffe25c674c35ab3769c2f",
+    "config": "inputs/configs/zram-writeback-zstd/.config"
+  },
+  {
+    "group": "zram-zstd",
+    "artifact": "zram",
+    "source_head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+    "source_tree": "f5156fb777b397bb064b1954b36ba08abfaea645",
+    "config_sha256": "18472c8fce42194dc4728d068055c707e7c07e4f619d48dc72209149e8be7a2c",
+    "kernel_sha256": "ce3154766a3f954a37c7242543e81402256dbdbbfa6296165a26cf1d226cf72b",
+    "config": "inputs/configs/zram-zstd/.config"
+  },
+  {
+    "group": "zswap-crosscheck-zstd",
+    "artifact": "zswap-crosscheck",
+    "source_head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+    "source_tree": "4a25cd2f2b176663e3b3323dbf307c8842ad1713",
+    "config_sha256": "178c79f64c04d00443b6c2cc8687233983a00d101d22135d1d98f4f457333316",
+    "kernel_sha256": "4759269316129dd15516280048749f88d6cd693c71b9aa85bae1ce712399226e",
+    "config": "inputs/configs/zswap-crosscheck-zstd/.config"
+  },
+  {
+    "group": "zswap-zstd",
+    "artifact": "zswap",
+    "source_head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+    "source_tree": "f5156fb777b397bb064b1954b36ba08abfaea645",
+    "config_sha256": "178c79f64c04d00443b6c2cc8687233983a00d101d22135d1d98f4f457333316",
+    "kernel_sha256": "1a566dee8d1c794f8a758c0e1cd7b6d4bc5c73d898fc6bb5de2278403b4c99d5",
+    "config": "inputs/configs/zswap-zstd/.config"
+  }
+]

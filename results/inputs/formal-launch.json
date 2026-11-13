@@ -1,0 +1,15 @@
+{
+  "state": "RUNNING",
+  "argv": [
+    "python3",
+    "-B",
+    "<repo>/results/2026-11-11-v4132-refreeze/round_resume.py",
+    "--first-controller",
+    "--execute"
+  ],
+  "started_at": "2026-11-11T03:39:30.632721+00:00",
+  "boot_id": "3a30893e-9960-40d6-91c1-4266a3310f77",
+  "controller_sha256": "8bc9d97eb0dcf49ee4195ac94169cbf06b0f954abbad453a88ab7907cbfb9e28",
+  "canary_validation_sha256": "02c1c32af6fdc40dc50f32ebb416116670707eca2884ebec3ee689f093c15041",
+  "pid": 2481485
+}

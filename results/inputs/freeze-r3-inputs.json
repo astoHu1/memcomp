@@ -1,0 +1,79 @@
+{
+  "plan": {
+    "path": "<plan>",
+    "sha256": "e8145eda4e65a5ab5ff68044a00ca95c6471d876ab3a61b784672eab46c0f2bf",
+    "snapshot": "<repo>/results/2026-11-11-v4132-refreeze/plan-v4.132.md",
+    "version": "v4.132"
+  },
+  "source": "<work>/v4106-series",
+  "head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+  "roles": {
+    "memcomp": {
+      "head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+      "kernel_sha256": "bad7b08b92f09ebf9ee98baebb83c7a555643a8cb8390d5557aef098da847b48",
+      "config_sha256": "d4191923749839e22d61f3d6328acf51d30e1a7fc70352ee52d492be4697e695",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/memcomp/freeze-check.json"
+    },
+    "zswap-crosscheck": {
+      "head": "6a664320ea1ac3febcf90b7ac8c4a1d03bcc5d3a",
+      "kernel_sha256": "4759269316129dd15516280048749f88d6cd693c71b9aa85bae1ce712399226e",
+      "config_sha256": "178c79f64c04d00443b6c2cc8687233983a00d101d22135d1d98f4f457333316",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/zswap-crosscheck/freeze-check.json"
+    },
+    "zram": {
+      "head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+      "kernel_sha256": "ce3154766a3f954a37c7242543e81402256dbdbbfa6296165a26cf1d226cf72b",
+      "config_sha256": "18472c8fce42194dc4728d068055c707e7c07e4f619d48dc72209149e8be7a2c",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/zram/freeze-check.json"
+    },
+    "zram-writeback": {
+      "head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+      "kernel_sha256": "9093f6c3435705bd03cb5bd1940d5fe611f56567b69ffe25c674c35ab3769c2f",
+      "config_sha256": "2da6934e42f025aee2bb69a9b4e793620fac584dbed9a56778247f38eb0dbfb3",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/zram-writeback/freeze-check.json"
+    },
+    "zswap": {
+      "head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+      "kernel_sha256": "1a566dee8d1c794f8a758c0e1cd7b6d4bc5c73d898fc6bb5de2278403b4c99d5",
+      "config_sha256": "178c79f64c04d00443b6c2cc8687233983a00d101d22135d1d98f4f457333316",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/zswap/freeze-check.json"
+    },
+    "swap": {
+      "head": "7dadb9d09b2aaa76abb4a0b45b60ae241ad032af",
+      "kernel_sha256": "3c6efd648e459689464dd8d25bd29580d56b4dcda4fff6aef8257af268568c7f",
+      "config_sha256": "5947a41c4a75c66bd72e032d6a407222cb96f82cb6635a235d44f9d689e34fd9",
+      "diagnostics": "DIAGNOSTIC_DELTA_PASS",
+      "freeze_receipt": "<repo>/results/2026-11-11-v4132-refreeze/frozen-kernels/swap/freeze-check.json"
+    }
+  },
+  "tools_manifest": "<repo>/results/2026-11-11-v4132-refreeze/freeze/build-inputs-r3.json",
+  "formal_jobs_plan": "<repo>/results/2026-11-11-v4132-refreeze/freeze/formal-965-r3-plan.json",
+  "formal_jobs_sha256": "61454ad0745ecf50fc0d36039570b6fbfd29ee55877a46546af6a7e461f619a5",
+  "comparison_counts": {
+    "source": "<repo>/results/2026-11-07-v498-f1/comparisons.json",
+    "sha256": "0476cb4264610b8da50f4ee2875f36154e6175b2c1ab9c102a054c3fc89a03db",
+    "computed_from_entries": {
+      "scheduled_populations": 72,
+      "derived_w1_populations": 7,
+      "total_populations": 79,
+      "scheduled_round_pairs": 675,
+      "derived_round_pairs": 70,
+      "primary_environment_timings": 84
+    },
+    "formal_metric_row_counts": "pending actual S5 summary; no formal runs yet"
+  },
+  "formal_matrix_executed": false,
+  "F4_status": "PASS_33",
+  "projection": "<repo>/results/2026-11-08-v4109-f34/projection.json",
+  "tool_versions": {
+    "retained_w1_w2_w3": "<repo>/results/2026-11-08-v4109-f34/tools/build-inputs.json",
+    "remaining_w4_and_formal965": "<repo>/results/2026-11-11-v4132-refreeze/freeze/build-inputs-r3.json"
+  },
+  "projection_sha256": "73e343c0cd74c5af8271da34d1d91a9bf456aeb385d2ccdd90b90e2ccfa62679",
+  "f4_status_summary_sha256": "03c8f378a87c42bfca5056829f569d2f696e4b62ffa4c669d121d6ba2150ba87"
+}

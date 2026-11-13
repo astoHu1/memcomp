@@ -1,0 +1,2102 @@
+[
+  {
+    "root": "<repo>/results/2026-11-11-v4132-refreeze/formal-965",
+    "rounds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "descriptive_only": true,
+    "ratios": [
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.001312770220256
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.001312770220256
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0021395693534023
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9889017443250756
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9961021864802796
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9961028514882044
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.001119229798209
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0011457450134715
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9829979027515627
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0052202696927386
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0053065107648025
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0014854776965714
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0014893769097102
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0122366336437443
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0049120642098224
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0048879632273988
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0016172683814868
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0016236092943247
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0035166955930443
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0058307611786033
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.005823661972406
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0040925204397593
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0041566296411348
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9967627443732268
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9967627443732268
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9992294374020773
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9999018478733375
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9999018478733375
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0031735181571593
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0017938249891527
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0169921118823724
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0011240159038934
+      },
+      {
+        "workload_id": "w1-corpus-chrome",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0051083221302535
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0019769973789947
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0019769973789947
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9951205224225599
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950524067112188
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0041619812835347
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0041775673559192
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9949291875450326
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9949291875450326
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0155624103057868
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.006042254642097
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0060236098958288
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.00462387310718
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.004619965322523
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0069675951016943
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0121216764362453
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0121413834687547
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0028123547793193
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0028058956091277
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0149910451749466
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0055035630116906
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0056058169058693
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0014325780381894
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.001482123868082
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0029802699085137
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0029802699085137
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0107707250703564
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.007014750927337
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.007014750927337
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9964472906091
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0076287628071738
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0320129903969038
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0036049928522264
+      },
+      {
+        "workload_id": "w1-corpus-discord",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0102367950778834
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0027330121295324
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0027330121295324
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.998652915798377
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0007473437728298
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0007473437728298
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0029761356250309
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0016147670766062
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0016147670766062
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9998238070647096
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0024498378659232
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0127041353562678
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.999681406707186
+      },
+      {
+        "workload_id": "w1-corpus-geomean",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0151335944239404
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0029678145802092
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0029678145802092
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9964003268114976
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9968038759510857
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9926224328482143
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.992641854117743
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950988476047861
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950880665295203
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.pswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0029855419607925
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9908966106170642
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9908905381479376
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9859293540002518
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9859328652442191
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.pswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0005808653349073
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0001197234360144
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0001522151098063
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0012878538201562
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0012878410944823
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.pswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9840627458693942
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9937187418443358
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9936926128453385
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9951666489608775
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950745864397125
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.004041245790342
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.004041245790342
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9899511290699982
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9992703547984689
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9992703547984689
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9971634567385506
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.000607976188515
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.009668501214934
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0022636737689021
+      },
+      {
+        "workload_id": "w1-corpus-netease_music",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.9129526910834928
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0038795241686165
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0038795241686165
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 1.00306352106676
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0019454431521668
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.002557530675956
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0025520233778966
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0020481088428257
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0020481129266647
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9945434442823027
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9972318033143466
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9972055173419754
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950220089900043
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9950220089900043
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0124950062213793
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0026958034754512
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0026821487183255
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0055598829299797
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0055598829299797
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.00701532123792
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0007353912631043
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0006823653906287
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0065856316783943
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0066678119888
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9966487776541264
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9966487776541264
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9988453496305216
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0001383961823613
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0001383961823613
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0005653158632768
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9981606268775058
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.04133567199772
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9946013517264823
+      },
+      {
+        "workload_id": "w1-corpus-qq",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.025931884796654
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0020227898597516
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0020227898597516
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0005314025208896
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0011228063232238
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9963096586929885
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9963102214110383
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0036600261605826
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0036651686497347
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.006661773574338
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0055706513772744
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.005597981547281
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0094269119975408
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0094321083683955
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0083387305872797
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0012055972247036
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0012077785049702
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0023003301777984
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0023079481978474
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9936921798129781
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0052911095708765
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0053590929747473
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9912584911632156
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9912584911632156
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0014228830664709
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0014228830664709
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0039509134981983
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0012379474440956
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0012379474440956
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9999814534009749
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9958369816505026
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0027345949293296
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9976363281970374
+      },
+      {
+        "workload_id": "w1-corpus-system_server",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.9989422065923508
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9997571220042656
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9997571220042656
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.98499228451815
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9854756050548255
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.989282963176296
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9893292030665861
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9876910855095651
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9876869143725626
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0048715860213764
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9995762732422884
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9995308352393815
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9905049114804223
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9905008527998609
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9997524798982709
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9985534664156079
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9985693465147123
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9882170827152273
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9882173493248589
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0014955127507836
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0018998747590326
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0020977356587775
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9971045624832109
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.997087528282263
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9953510010729325
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9953510010729325
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9947427663730606
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9986232054149221
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9986232054149221
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9910732866484093
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9990806073902134
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.9920728856543958
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.996169209686928
+      },
+      {
+        "workload_id": "w1-corpus-systemui",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.9966914383445598
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0031894751155446
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0031894751155446
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.992958400426612
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9888004052861226
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0009666615564068
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0009364084105217
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9904834884877506
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9904915820651097
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.996859023970795
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0083362051629838
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0082983609311702
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.993391717390793
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9933957373170654
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9967841844723264
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0083169781140646
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0083314288401335
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 1.000220170729152
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0002201846089973
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9963924463265545
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9959365481927751
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9958725457094475
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.997343996787979
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.997360947038213
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9991158943713074
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9991158943713074
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9977594053811554
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 0.9981590206498989
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 0.9981590206498989
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9991012534214286
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0026519034873047
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.009417428524767
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.0026320496797467
+      },
+      {
+        "workload_id": "w1-corpus-telegram",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0187559779782795
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "rand.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0001197024360804
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "rand.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0001197024360804
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "randrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9936695832930257
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9942439209016005
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9971536191814805
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.997149431012901
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9921521230054144
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.992155933545368
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rand_read_begin->rand_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.995762641116085
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.998580138275783
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9985776422808952
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9985479727954574
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9985405992126078
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:rewrite_read_begin->rewrite_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0113287479277218
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9988417141899868
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9988053359917926
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9949476007673197
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9949537253405962
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:seq_read_begin->seq_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 1.0055426927150521
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9987099630574457
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9988235195225366
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9939853819805895
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9939533066680464
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "read_delta:single_read_begin->single_read_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "rewrite.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0003125966305417
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "rewrite.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0003125966305417
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "rewriterf_ns",
+        "pairs": 10,
+        "median_ratio": 1.0003111869355332
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "seq.pageout_attempt_ns",
+        "pairs": 10,
+        "median_ratio": 1.0022184693607075
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "seq.pageout_ns",
+        "pairs": 10,
+        "median_ratio": 1.0022184693607075
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "seqrf_ns",
+        "pairs": 10,
+        "median_ratio": 0.9959312817883517
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "single.spo_p50_ns",
+        "pairs": 10,
+        "median_ratio": 1.000644415803742
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "single.spo_p99_ns",
+        "pairs": 10,
+        "median_ratio": 1.0141342456774534
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "single.srf_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9946666624526715
+      },
+      {
+        "workload_id": "w1-corpus-wechat",
+        "metric": "single.srf_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.969316782025658
+      },
+      {
+        "workload_id": "w2",
+        "metric": "ack_conditional_p50_ns",
+        "pairs": 10,
+        "median_ratio": 0.9947188766111015
+      },
+      {
+        "workload_id": "w2",
+        "metric": "ack_conditional_p99_ns",
+        "pairs": 10,
+        "median_ratio": 0.9420885718812282
+      },
+      {
+        "workload_id": "w2",
+        "metric": "alive_before_cleanup",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "availability",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:psi.cpu.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9864805613168615
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:psi.io.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.992844069900249
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:psi.io.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.992881299037421
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:psi.memory.full_total_us",
+        "pairs": 10,
+        "median_ratio": 0.988940681243985
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:psi.memory.some_total_us",
+        "pairs": 10,
+        "median_ratio": 0.9888829813567462
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vda.read_bytes",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vda.write_bytes",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vmstat.pswpin",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vmstat.pswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vmstat.zswpin",
+        "pairs": 10,
+        "median_ratio": 1.0000125690440442
+      },
+      {
+        "workload_id": "w2",
+        "metric": "global_delta:workload_start->workload_end:vmstat.zswpout",
+        "pairs": 10,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "pressure_allocation_delta:pressure_begin->pressure_ready:psi.memory.full_total_us",
+        "pairs": 5,
+        "median_ratio": 1.2635089894606324
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "pressure_allocation_delta:pressure_begin->pressure_ready:psi.memory.some_total_us",
+        "pairs": 5,
+        "median_ratio": 1.2639543148047139
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:psi.cpu.some_total_us",
+        "pairs": 5,
+        "median_ratio": 0.990386726516473
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:psi.io.full_total_us",
+        "pairs": 5,
+        "median_ratio": 1.0131045680592907
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:psi.io.some_total_us",
+        "pairs": 5,
+        "median_ratio": 1.0131269905126064
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:psi.memory.full_total_us",
+        "pairs": 5,
+        "median_ratio": 0.9999779536374581
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:psi.memory.some_total_us",
+        "pairs": 5,
+        "median_ratio": 0.9999769952543127
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:vmstat.pswpin",
+        "pairs": 5,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:vmstat.zswpin",
+        "pairs": 5,
+        "median_ratio": 1.0
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "read_delta:read_begin->read_end:vmstat.zswpout",
+        "pairs": 5,
+        "median_ratio": 0.9980602081545865
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "refault_p50_ns",
+        "pairs": 5,
+        "median_ratio": 1.0008539709649873
+      },
+      {
+        "workload_id": "w3-anon-512m",
+        "metric": "refault_p99_ns",
+        "pairs": 5,
+        "median_ratio": 1.2729571849068704
+      }
+    ]
+  }
+]

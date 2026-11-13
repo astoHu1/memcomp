@@ -1,0 +1,11 @@
+{
+  "state": "FORMAL_SUMMARY_COMPLETE",
+  "jobs": 965,
+  "extraction_failures": 0,
+  "E5": "within_noise",
+  "primary_environment_rows": 0,
+  "E4": "E4-decision-table.csv",
+  "segments": 1,
+  "comparison_source_path": "<repo>/bench/compare/summarize.py",
+  "summary_sha256": "d9adfec32c4f0d420505f1098913da8ddeaec3277f6842fbd777453110f3d8b2"
+}

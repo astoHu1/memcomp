@@ -1,0 +1,120 @@
+From fd959a72b58147cdb6df1028bc1d24b043ba9c03 Mon Sep 17 00:00:00 2001
+From: nakixii <nakixii@gmail.com>
+Date: Thu, 5 Nov 2026 20:11:01 +0800
+Subject: [RFC PATCH 05/16] mm: memcomp: charge compressed pages to the source
+ memcg
+
+Reclaim can execute in a different memory cgroup from the folio that
+owns the contents. Charging compressed storage to the reclaiming task
+can move memory usage away from the cgroup that supplied those pages.
+
+Capture and retain the source folio's object cgroup for resident records
+and per-key storage. Charge allocated metadata and payload bytes to that
+owner, including allocator-sized metadata where applicable. Nonzero
+same-filled slots have metadata but no allocated payload; the zero
+domain has neither a slot nor a payload charge.
+
+Reserve payload charges outside the token lock with non-reclaiming
+allocation flags. Transfer a charge only when its payload is published,
+and refund it when allocation or revalidation prevents publication.
+Refresh releases the superseded payload charge while preserving the
+ownership needed by its replacement.
+
+Release payload charges with their backing, and retain metadata charges
+and owner references until their corresponding records, segments,
+clusters and keys are freed. RCU readers must not outlive the metadata
+or its accounting owner. Leave restored-folio charging to the ordinary
+memory-management paths rather than adding a separate cgroup quota.
+
+Assisted-by: LLM
+Signed-off-by: nakixii <nakixii@gmail.com>
+---
+ mm/memcomp.c         | 22 ++++++++++++++++++----
+ mm/memcomp/storage.h | 22 ++++++++++++++++++++--
+ 2 files changed, 38 insertions(+), 6 deletions(-)
+
+diff --git a/mm/memcomp.c b/mm/memcomp.c
+index 80b71e217ff5a6a2fa1d033edf6079a670a55020..8944fa081f3e35bfacf00d3a1c09c8bb32a9db18 100644
+--- a/mm/memcomp.c
++++ b/mm/memcomp.c
+@@ -663,29 +663,43 @@ static void memcomp_zs_free(u8 pool_idx, unsigned long handle)
+ 
+ static struct obj_cgroup *memcomp_objcg_get(struct folio *folio)
+ {
+-	/* Compressed objects do not have an accounting owner yet. */
+-	return NULL;
++	return get_obj_cgroup_from_folio(folio);
+ }
+ 
+ /* Hold an additional metadata owner without bypassing the test model. */
+ static __maybe_unused void memcomp_objcg_get_ref(struct obj_cgroup *objcg)
+ {
+-	/* No accounting owner was acquired. */
++#ifdef CONFIG_MEMCG
++	if (objcg)
++		obj_cgroup_get(objcg);
++#endif
+ }
+ 
+ static void memcomp_objcg_put(struct obj_cgroup *objcg)
+ {
+-	/* No accounting owner was acquired. */
++	obj_cgroup_put(objcg);
+ }
+ 
+ static int memcomp_objcg_charge(struct obj_cgroup *objcg, gfp_t gfp,
+ 				size_t size)
+ {
++#if defined(CONFIG_MEMCG)
++	if (!objcg || !size)
++		return 0;
++
++	return obj_cgroup_charge(objcg, gfp, size);
++#else
+ 	return 0;
++#endif
+ }
+ 
+ static void memcomp_objcg_uncharge(struct obj_cgroup *objcg, size_t size)
+ {
++#if defined(CONFIG_MEMCG)
++	if (!objcg || !size)
++		return;
++	obj_cgroup_uncharge(objcg, size);
++#endif
+ }
+ 
+ #include "memcomp/format.h"
+diff --git a/mm/memcomp/storage.h b/mm/memcomp/storage.h
+index bae605f20e79bec5d6dc5573f3148ef15e95ee84..f11aad87a1773c0e2f16b1bb3d506cb4caeb7386 100644
+--- a/mm/memcomp/storage.h
++++ b/mm/memcomp/storage.h
+@@ -223,8 +223,26 @@ static inline void mc16_retained_empty_dec_locked(void)
+ static inline void *mc16_kmalloc_owner(size_t bytes, gfp_t gfp,
+ 				       struct obj_cgroup *objcg)
+ {
+-	/* Metadata remains unaccounted until a source owner is introduced. */
+-	return kmalloc(bytes, gfp & ~__GFP_ACCOUNT);
++	struct mem_cgroup *memcg = NULL, *old;
++	void *ptr;
++
++#ifdef CONFIG_MEMCG
++	if (objcg)
++		memcg = get_mem_cgroup_from_objcg(objcg);
++#endif
++	old = set_active_memcg(memcg);
++	/* An unaccounted/root source must not charge the submitting task. */
++	if (objcg)
++		gfp |= __GFP_ACCOUNT;
++	else
++		gfp &= ~__GFP_ACCOUNT;
++	ptr = kmalloc(bytes, gfp);
++	set_active_memcg(old);
++#ifdef CONFIG_MEMCG
++	if (memcg)
++		css_put(&memcg->css);
++#endif
++	return ptr;
+ }
+ 
+ static inline void *mc16_owner_alloc(size_t bytes, gfp_t gfp,

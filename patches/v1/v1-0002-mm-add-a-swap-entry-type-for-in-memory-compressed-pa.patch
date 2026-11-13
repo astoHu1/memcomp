@@ -1,0 +1,132 @@
+From 52471b36d4f35205dd762f045f384bb1b25a30d4 Mon Sep 17 00:00:00 2001
+From: nakixii <nakixii@gmail.com>
+Date: Thu, 5 Nov 2026 17:11:36 +0800
+Subject: [RFC PATCH 02/16] mm: add a swap entry type for in-memory compressed
+ pages
+
+An in-memory compressed page has no swap device or swap offset. Encoding
+its reference as an ordinary swap entry would direct faults to the swap
+cache and allow swap-device lookup to interpret an unrelated token.
+
+Reserve a non-swap entry type for memcomp and provide helpers to
+construct and recognize it. Account for the reserved type when locating
+PTE markers and computing the maximum number of swap areas, keeping
+these encodings disjoint. A build without MEMCOMP reserves no additional
+entry type.
+
+Provide the disabled-backend interface needed by callers without sending
+these entries through the ordinary swap-device paths. The compression
+backend and its reclaim hooks are introduced separately.
+
+Assisted-by: LLM
+Signed-off-by: nakixii <nakixii@gmail.com>
+---
+ MAINTAINERS             |  1 +
+ include/linux/memcomp.h | 13 +++++++++++++
+ include/linux/swap.h    | 13 +++++++++++--
+ include/linux/swapops.h | 22 ++++++++++++++++++++++
+ 4 files changed, 47 insertions(+), 2 deletions(-)
+ create mode 100644 include/linux/memcomp.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index de04c7ba8571bdd79d564393847d32cc2f18a07d..dc29bbc6e53547cba9fc1763104463bb1091f7ec 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -14852,6 +14852,7 @@ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/akpm/mm
+ T:	quilt git://git.kernel.org/pub/scm/linux/kernel/git/akpm/25-new
+ F:	include/linux/gfp.h
+ F:	include/linux/gfp_types.h
++F:	include/linux/memcomp.h
+ F:	include/linux/memfd.h
+ F:	include/linux/memory.h
+ F:	include/linux/memory_hotplug.h
+diff --git a/include/linux/memcomp.h b/include/linux/memcomp.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..d399e76bd6b62fdbe377b905cd649960d802bcec
+--- /dev/null
++++ b/include/linux/memcomp.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_MEMCOMP_H
++#define _LINUX_MEMCOMP_H
++
++#include <linux/types.h>
++
++/* The encoding reservation alone does not provide a compression backend. */
++static inline bool memcomp_available(void)
++{
++	return false;
++}
++
++#endif /* _LINUX_MEMCOMP_H */
+diff --git a/include/linux/swap.h b/include/linux/swap.h
+index f3e0ac20c2e8c91f75d1afd62d736cce113e5fad..83d188e927e0af6dd356d39c33026f860082056e 100644
+--- a/include/linux/swap.h
++++ b/include/linux/swap.h
+@@ -62,7 +62,8 @@ static inline int current_is_kswapd(void)
+  */
+ #define SWP_PTE_MARKER_NUM 1
+ #define SWP_PTE_MARKER     (MAX_SWAPFILES + SWP_HWPOISON_NUM + \
+-			    SWP_MIGRATION_NUM + SWP_DEVICE_NUM)
++			    SWP_MIGRATION_NUM + SWP_DEVICE_NUM + \
++			    SWP_MEMCOMP_NUM)
+ 
+ /*
+  * Unaddressable device memory support. See include/linux/hmm.h and
+@@ -86,6 +87,14 @@ static inline int current_is_kswapd(void)
+ #define SWP_DEVICE_NUM 0
+ #endif
+ 
++#ifdef CONFIG_MEMCOMP
++#define SWP_MEMCOMP_NUM 1
++#define SWP_MEMCOMP (MAX_SWAPFILES + SWP_HWPOISON_NUM + \
++			 SWP_MIGRATION_NUM + SWP_DEVICE_NUM)
++#else
++#define SWP_MEMCOMP_NUM 0
++#endif
++
+ /*
+  * Page migration support.
+  *
+@@ -116,7 +125,7 @@ static inline int current_is_kswapd(void)
+ 
+ #define MAX_SWAPFILES \
+ 	((1 << MAX_SWAPFILES_SHIFT) - SWP_DEVICE_NUM - \
+-	SWP_MIGRATION_NUM - SWP_HWPOISON_NUM - \
++	SWP_MIGRATION_NUM - SWP_HWPOISON_NUM - SWP_MEMCOMP_NUM - \
+ 	SWP_PTE_MARKER_NUM)
+ 
+ /*
+diff --git a/include/linux/swapops.h b/include/linux/swapops.h
+index cb468e418ea11444ad0fe4be3b551787ba26947f..0327ccc7a6bc808b08780c6d3848d86dee59c213 100644
+--- a/include/linux/swapops.h
++++ b/include/linux/swapops.h
+@@ -109,6 +109,28 @@ static inline pgoff_t swp_offset(swp_entry_t entry)
+ 	return entry.val & SWP_OFFSET_MASK;
+ }
+ 
++#ifdef CONFIG_MEMCOMP
++static inline bool is_memcomp_entry(swp_entry_t entry)
++{
++	return swp_type(entry) == SWP_MEMCOMP;
++}
++
++static inline swp_entry_t make_memcomp_entry(pgoff_t offset)
++{
++	return swp_entry(SWP_MEMCOMP, offset);
++}
++#else
++static inline bool is_memcomp_entry(swp_entry_t entry)
++{
++	return false;
++}
++
++static inline swp_entry_t make_memcomp_entry(pgoff_t offset)
++{
++	return swp_entry(0, 0);
++}
++#endif
++
+ /*
+  * This should only be called upon a pfn swap entry to get the PFN stored
+  * in the swap entry.  Please refers to is_pfn_swap_entry() for definition
