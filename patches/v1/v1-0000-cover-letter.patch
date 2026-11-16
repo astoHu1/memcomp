@@ -51,9 +51,9 @@ KUnit: 492 tests pass on x86, both with the classic LRU in a debug
 configuration and with MGLRU. On arm64 ACK with MTE (HW_TAGS), 487 pass
 and six are skipped as architecture-specific.
 
-A 17-case end-to-end test in KVM guests passes. The nine cases with
-swap run to completion; in the eight cases without swap the checker
-stops early, so those are partial results.
+All 17 cases of an end-to-end test in KVM guests passed their checks.
+The nine cases with swap ran every check; in the eight cases without
+swap the checker stops early, so those results are partial.
 
 These are retained results, not reruns. KUnit ran on the final test
 candidate, before the sysfs directory was renamed and the matching
