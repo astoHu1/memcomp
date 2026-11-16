@@ -1,4 +1,4 @@
-From 5f25d93cec66d5b7e38d86a11f6a5178cd443496 Mon Sep 17 00:00:00 2001
+From 79192008b23d0acd9cc4018851d3ca82f6b3c46c Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:04 +0800
 Subject: [RFC PATCH 07/16] mm: memcomp: write cold pages back to swap
@@ -32,7 +32,6 @@ charge before converting backing to RAM, and refund losing races.
 Preserve nofs allocation and the reference lifetime across waits, so
 swapoff does not reclaim recursively while holding a token lock.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  include/linux/memcomp.h      |   23 +

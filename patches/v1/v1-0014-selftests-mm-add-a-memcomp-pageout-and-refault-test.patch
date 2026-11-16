@@ -1,4 +1,4 @@
-From c37dd804aea90d3e4184960c25a6d189c6c62787 Mon Sep 17 00:00:00 2001
+From ff85c974e37c73b59b6d970124c0b378646f848a Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:10 +0800
 Subject: [RFC PATCH 14/16] selftests/mm: add a memcomp pageout and refault
@@ -27,7 +27,6 @@ kernel configuration requirements. These tests complement the internal
 ownership checks by exercising the userspace interfaces and checking
 restored contents.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  MAINTAINERS                            |   1 +

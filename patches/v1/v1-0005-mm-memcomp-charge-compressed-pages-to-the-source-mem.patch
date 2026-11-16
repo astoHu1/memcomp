@@ -1,4 +1,4 @@
-From fd959a72b58147cdb6df1028bc1d24b043ba9c03 Mon Sep 17 00:00:00 2001
+From f9c7d6ab4b12ac081eb4e28aec28b734021ef9c6 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:01 +0800
 Subject: [RFC PATCH 05/16] mm: memcomp: charge compressed pages to the source
@@ -26,7 +26,6 @@ clusters and keys are freed. RCU readers must not outlive the metadata
 or its accounting owner. Leave restored-folio charging to the ordinary
 memory-management paths rather than adding a separate cgroup quota.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/memcomp.c         | 22 ++++++++++++++++++----

@@ -1,4 +1,4 @@
-From a754d0411599f1d3f508246989cead92edad8502 Mon Sep 17 00:00:00 2001
+From 5c2f3b7e749e6864344c501831f70139dbf91559 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 17:11:36 +0800
 Subject: [RFC PATCH 01/16] mm: userfaultfd: check the exclusivity of the page
@@ -21,7 +21,6 @@ unmapping without requiring an additional page-storage backend.
 
 Fixes: adef440691ba ("userfaultfd: UFFDIO_MOVE uABI")
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/userfaultfd.c | 17 +++++++++++++++--

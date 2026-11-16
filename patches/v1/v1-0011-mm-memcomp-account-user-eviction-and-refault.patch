@@ -1,4 +1,4 @@
-From 9d0607ca47ebb02cb522fa14973d6325caa2b0f4 Mon Sep 17 00:00:00 2001
+From 176a2ec1a017abad1a2f3d994758b33f1ca8ca56 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Tue, 10 Nov 2026 05:29:47 +0800
 Subject: [RFC PATCH 11/16] mm: memcomp: account user eviction and refault
@@ -20,7 +20,6 @@ without invalidating its caller's completed cache transaction, so retain
 the ownership precondition check. Keep the temporary pin through
 publication because truncate can then consume the cache reference.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  include/linux/memcomp.h       |   6 ++

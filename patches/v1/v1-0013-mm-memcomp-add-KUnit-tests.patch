@@ -1,4 +1,4 @@
-From 550748546d328d88fc0cda93fd73474d29f35c9a Mon Sep 17 00:00:00 2001
+From db87354809cf50a6dad48bc013dcf8d25ca81d77 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:07 +0800
 Subject: [RFC PATCH 13/16] mm: memcomp: add KUnit tests
@@ -32,7 +32,6 @@ provide a dedicated KUnit configuration. Controlled allocation, object-
 cgroup and I/O models expose otherwise difficult lifetime paths; they do
 not substitute for end-to-end runtime validation.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/Kconfig                                    |   13 +

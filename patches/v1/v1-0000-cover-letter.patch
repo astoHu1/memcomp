@@ -1,6 +1,6 @@
-From 8b1556a7dc7b48f8256855a26158b25e7c2ff728 Mon Sep 17 00:00:00 2001
+From ff43474eaeb9f465127c83a9861619333c4e77b6 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
-Date: Mon, 16 Nov 2026 14:42:13 +0800
+Date: Mon, 16 Nov 2026 15:52:31 +0800
 Subject: [RFC PATCH 00/16] mm: add in-memory compression of reclaimed pages
 
 This is a proof of concept, posted to ask whether the approach is worth
@@ -128,8 +128,15 @@ whitepaper. No phone results are reported: the variables on a phone
 could not be controlled, so all numbers come from KVM guests, and they
 do not establish device latency, energy use or compatibility.
 
-The code was written with LLM assistance, marked Assisted-by: LLM in
-each patch, and reviewed and signed off by me.
+Tool use
+========
+
+Most of the code, the tests, the changelogs and this letter were
+written with LLM coding assistants, working from my design decisions
+and under my review over many iterations. I reviewed every patch and
+take responsibility for it. The assistants also ran the builds, KUnit,
+the KVM end-to-end test and the 965-boot comparison described above;
+the test programs and raw results are in the GitHub repository.
 
 nakixii (16):
   mm: userfaultfd: check the exclusivity of the page being moved

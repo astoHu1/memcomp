@@ -1,4 +1,4 @@
-From b9cc5776ca80c83357be5cafb3f0b4c6910da898 Mon Sep 17 00:00:00 2001
+From f1f6be791626e4553c43cffd625aba5aba39cb58 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Tue, 10 Nov 2026 05:29:47 +0800
 Subject: [RFC PATCH 12/16] mm: memcomp: report precise token residency
@@ -12,7 +12,6 @@ Preserve each base kernel's native syscall and page-size handling.
 Add test-only query seams with the KUnit patch, not this production
 step.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  include/linux/memcomp.h |   7 +++

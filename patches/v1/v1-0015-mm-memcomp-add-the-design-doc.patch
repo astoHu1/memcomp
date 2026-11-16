@@ -1,4 +1,4 @@
-From 3321c198dea8de463b7cda0fd0b2f72ec0838066 Mon Sep 17 00:00:00 2001
+From 54ae1e8f05d4159cabf94fc1c4bcb21067a1479e Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:12 +0800
 Subject: [RFC PATCH 15/16] mm: memcomp: add the design doc
@@ -24,7 +24,6 @@ lock acquisition. Document the stock crypto and zsmalloc dependencies,
 supported contexts and restrictions, and link the design from the
 memory-management documentation index.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  Documentation/mm/index.rst   |   1 +

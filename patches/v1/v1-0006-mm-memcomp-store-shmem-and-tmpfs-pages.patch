@@ -1,4 +1,4 @@
-From 11913c8ac2e4876bcf6bbe0ba320fb104bdf7751 Mon Sep 17 00:00:00 2001
+From 12257e57ab9701c11da2399f3619bff5f8286a36 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:02 +0800
 Subject: [RFC PATCH 06/16] mm: memcomp: store shmem and tmpfs pages
@@ -28,7 +28,6 @@ Retain ordinary shmem swap as a fallback. A successful in-memory store
 needs no swap device, and truncate or swapin races can retry without
 publishing contents from a stale shadow.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  include/linux/memcomp.h  |  80 +++++++++++++

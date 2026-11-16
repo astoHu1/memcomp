@@ -1,4 +1,4 @@
-From f6df7c08a86b8712a7fecdb076b21c087e7b1530 Mon Sep 17 00:00:00 2001
+From 32cfb221d1b2bd45d37b8d0085ac90fe8d44f060 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Tue, 10 Nov 2026 05:29:47 +0800
 Subject: [RFC PATCH 10/16] mm: memcomp: queue restored large folios for
@@ -8,7 +8,6 @@ Register a successfully restored multi-page anonymous folio with the
 deferred split queue before installing its PTEs. Keep the existing
 single-page, failed-load and rollback paths unchanged.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/memcomp/fault.h | 6 ++++--

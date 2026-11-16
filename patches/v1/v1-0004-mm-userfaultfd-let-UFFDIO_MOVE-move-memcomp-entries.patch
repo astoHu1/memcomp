@@ -1,4 +1,4 @@
-From 8ca03f77cdbeb7f428daa0bf82f438e2bad8360d Mon Sep 17 00:00:00 2001
+From d9ef1aa733610b0f1b7a0b24990929f88a7402bb Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:00 +0800
 Subject: [RFC PATCH 04/16] mm: userfaultfd: let UFFDIO_MOVE move memcomp
@@ -24,7 +24,6 @@ Rollback of memcomp entries makes partially unmapped large folios more
 common. The per-page exclusivity check also covers that state without
 treating the first page's flag as the flag of every mapped subpage.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/userfaultfd.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++++

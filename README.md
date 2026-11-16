@@ -51,8 +51,8 @@ commits are re-signed:
 - mainline series v1: tree `8f5623ffce75e000d508c35257eadc13af89c80f`
 - ACK series v1: tree `4b45de7370f4d25b667776d02e7675c774dd1d08`
 
-The signed branch heads are `8b1556a7dc7b` for mainline and
-`2d796138f6fb` for ACK.
+The signed branch heads are `ff43474eaeb9` for mainline and
+`021862bfec30` for ACK.
 
 [patches/v1/](patches/v1/) contains the mainline series exported with
 `git format-patch` and its cover letter. The patches are signed off.

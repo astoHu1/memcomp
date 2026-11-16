@@ -1,4 +1,4 @@
-From 8b1556a7dc7b48f8256855a26158b25e7c2ff728 Mon Sep 17 00:00:00 2001
+From ff43474eaeb9f465127c83a9861619333c4e77b6 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:15 +0800
 Subject: [RFC PATCH 16/16] mm: memcomp: add the admin guide
@@ -23,7 +23,6 @@ aligned with the series. State operational restrictions and untested
 areas explicitly rather than promising behavior beyond the supported
 configuration or available validation.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  .../ABI/testing/sysfs-kernel-mm-memcomp       | 363 ++++++++++++++++++

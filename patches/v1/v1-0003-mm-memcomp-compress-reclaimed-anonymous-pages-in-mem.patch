@@ -1,4 +1,4 @@
-From a10244d77608d7e3a3f8303f0f82b8f790353999 Mon Sep 17 00:00:00 2001
+From 8d4d037a495f6fcf6c25e42ff127d6afeae037b8 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:10:59 +0800
 Subject: [RFC PATCH 03/16] mm: memcomp: compress reclaimed anonymous pages in
@@ -82,7 +82,6 @@ Ordinary swap remains the fallback before token ownership; compressed
 writeback is not part of this change. UFFDIO_MOVE returns -EFAULT for
 memcomp entries until the following change adds their movement.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  .../admin-guide/kernel-parameters.txt         |   10 +

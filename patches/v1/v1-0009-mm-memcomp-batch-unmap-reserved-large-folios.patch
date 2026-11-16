@@ -1,4 +1,4 @@
-From e69d7f84003e9be26088270ea66b45d2ea97ea1b Mon Sep 17 00:00:00 2001
+From 7b4a579353131873190144f6d29b4cf9494a09dc Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Tue, 10 Nov 2026 05:29:47 +0800
 Subject: [RFC PATCH 09/16] mm: memcomp: batch unmap reserved large folios
@@ -12,7 +12,6 @@ Keep TLB ordering, notifier scope and the native rmap completion
 context.
 Do not import the general lazyfree batching policy.
 
-Assisted-by: LLM
 Signed-off-by: nakixii <nakixii@gmail.com>
 ---
  mm/memcomp_rmap.h | 139 ++++++++++++++++++++++++++++++++++++++++++++++
