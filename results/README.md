@@ -13,8 +13,9 @@ are generated from the files in `formal-965/`.
   `inputs/kernel-identities.json` gives each group's tree, `.config`
   hash and kernel image hash; the configurations are in
   `inputs/configs/`.
-- Series v1 (tree `8f5623ffce75e000d508c35257eadc13af89c80f`) differs from
-  the measured tree only by the rename of the sysfs directory. The
+- Series v1 (tree `06b510f011f66cb14e8a5dd4d00d72a3a1a0a7a5`) differs from
+  the measured tree only by the rename of the sysfs directory and by
+  seven removed header-comment lines. The
   collection therefore read the earlier directory name, and the frozen
   tools and logs keep it. The copies under `bench/` read
   `/sys/kernel/mm/memcomp`.

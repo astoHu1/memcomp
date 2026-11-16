@@ -20,10 +20,12 @@ memcomp series and are described in the cover letter.
 | B | prerequisites + 9 local boot patches, no series | `9f9e23cb4c74a81c74e77096de0ed27a571ba35b` | `8ca1b4120edafb6cadfdb85a50a7c2644441115c` |
 
 The Release image was built from the commits before signing. Signing
-added Signed-off-by lines and a later rewrite removed the Assisted-by
-trailers; neither changed the tree. The signed ACK branch head
-`021862bfec301ab3ea7cfebd5d64bf0e9bd92e94` therefore has the same tree, and an image built from it
-differs only in the version string suffix.
+added Signed-off-by lines, a later rewrite removed the Assisted-by
+trailers, and seven header-comment lines were removed before posting.
+The signed ACK branch head `713abbe0490a37e4ff6717920833e826e80d946f` has tree
+`d37a8c4e747f5803f954ec434f42b0d1f003d567`, which differs from the Release tree only by those
+comment lines. The image was not rebuilt; line numbers in two headers
+changed, so a rebuild would not be byte-identical.
 
 The local boot patches make the image boot on the test phone. A and B
 share these seven:

@@ -1,6 +1,6 @@
-From ff43474eaeb9f465127c83a9861619333c4e77b6 Mon Sep 17 00:00:00 2001
+From 07038a98738485a22e70da0b58e1873a5867ec0b Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
-Date: Mon, 16 Nov 2026 15:52:31 +0800
+Date: Mon, 16 Nov 2026 18:32:33 +0800
 Subject: [RFC PATCH 00/16] mm: add in-memory compression of reclaimed pages
 
 This is a proof of concept, posted to ask whether the approach is worth
@@ -122,11 +122,12 @@ Less favorable:
   application, memcomp used 5-8% more memory than zram; this leaves
   out zram's disksize-sized table, which was larger than the difference.
 
-The measured kernels differ from this series only by the sysfs
-directory rename. All decisions, including undecided rows, are in the
-whitepaper. No phone results are reported: the variables on a phone
-could not be controlled, so all numbers come from KVM guests, and they
-do not establish device latency, energy use or compatibility.
+The measured kernels differ from this series only by the sysfs directory
+rename and by seven removed header-comment lines. All decisions,
+including undecided rows, are in the whitepaper. No phone results are
+reported: the variables on a phone could not be controlled, so all
+numbers come from KVM guests, and they do not establish device latency,
+energy use or compatibility.
 
 Tool use
 ========
@@ -187,7 +188,7 @@ nakixii (16):
  mm/memcomp/fault.h                            |  320 +
  mm/memcomp/fault_alloc.h                      |   23 +
  mm/memcomp/fifo.h                             |  136 +
- mm/memcomp/folio.h                            |  435 ++
+ mm/memcomp/folio.h                            |  434 ++
  mm/memcomp/format.h                           |  308 +
  mm/memcomp/lifetime.h                         |   87 +
  mm/memcomp/load.h                             |   96 +
@@ -223,7 +224,7 @@ nakixii (16):
  mm/memcomp/tests/enospc_test.h                |  236 +
  mm/memcomp/tests/fault_alloc_test.h           |  119 +
  mm/memcomp/tests/fault_test.h                 |  851 +++
- mm/memcomp/tests/folio_test.h                 |  770 ++
+ mm/memcomp/tests/folio_test.h                 |  769 ++
  mm/memcomp/tests/format_test.h                |  520 ++
  mm/memcomp/tests/late_async_test.h            |  331 +
  mm/memcomp/tests/load_test.h                  |  133 +
@@ -235,7 +236,7 @@ nakixii (16):
  mm/memcomp/tests/public_driver_test.h         |  358 +
  mm/memcomp/tests/query_test.h                 |  480 ++
  mm/memcomp/tests/refs_test.h                  |  224 +
- mm/memcomp/tests/replacement_test.h           |  361 +
+ mm/memcomp/tests/replacement_test.h           |  360 +
  mm/memcomp/tests/resident_test.h              |  796 +++
  mm/memcomp/tests/rollback_test.h              |  163 +
  mm/memcomp/tests/scan_test.h                  |  422 ++
@@ -245,7 +246,7 @@ nakixii (16):
  mm/memcomp/tests/span_test.h                  |  128 +
  mm/memcomp/tests/storage_fixture.h            |   84 +
  mm/memcomp/tests/storage_test.h               |  468 ++
- mm/memcomp/tests/store_transaction_test.h     |  588 ++
+ mm/memcomp/tests/store_transaction_test.h     |  587 ++
  mm/memcomp/tests/suite.h                      |  693 ++
  mm/memcomp/tests/swapoff_test.h               |  558 ++
  mm/memcomp/tests/swapoff_walk_test.h          |  562 ++
@@ -253,10 +254,10 @@ nakixii (16):
  mm/memcomp/tests/test_api.h                   |   41 +
  mm/memcomp/tests/transport_reclaim_test.h     |  298 +
  mm/memcomp/tests/transport_test.h             |  114 +
- mm/memcomp/tests/workingset_load_test.h       | 1096 +++
+ mm/memcomp/tests/workingset_load_test.h       | 1095 +++
  mm/memcomp/tests/workingset_mthp_error_test.h |  164 +
  mm/memcomp/tests/workingset_storage_test.h    |  442 ++
- mm/memcomp/tests/workingset_store_test.h      |  573 ++
+ mm/memcomp/tests/workingset_store_test.h      |  572 ++
  mm/memcomp/tests/writeback_batch_test.h       |  688 ++
  mm/memcomp/tests/writeback_test.h             |  540 ++
  mm/memcomp/tests/zero_callers_test.h          |  717 ++
@@ -266,7 +267,7 @@ nakixii (16):
  mm/memcomp/tests/zero_load_test.h             |  645 ++
  mm/memcomp/tests/zero_test.h                  |  313 +
  mm/memcomp/workingset_load.h                  |   97 +
- mm/memcomp/workingset_store.h                 |   63 +
+ mm/memcomp/workingset_store.h                 |   62 +
  mm/memcomp/writeback.h                        |  133 +
  mm/memcomp/writeback_batch.h                  |  398 ++
  mm/memcomp/zero.h                             |  205 +
@@ -290,7 +291,7 @@ nakixii (16):
  tools/testing/selftests/mm/config             |   11 +
  tools/testing/selftests/mm/hmm-tests.c        |  112 +
  tools/testing/selftests/mm/memcomp.c          |  831 +++
- 134 files changed, 46832 insertions(+), 14 deletions(-)
+ 134 files changed, 46825 insertions(+), 14 deletions(-)
  create mode 100644 Documentation/ABI/testing/sysfs-kernel-mm-memcomp
  create mode 100644 Documentation/admin-guide/mm/memcomp.rst
  create mode 100644 Documentation/mm/memcomp.rst

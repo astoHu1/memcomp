@@ -1,4 +1,4 @@
-From 176a2ec1a017abad1a2f3d994758b33f1ca8ca56 Mon Sep 17 00:00:00 2001
+From 6216298ef5c12e0585ed00de3abb0dd45c504e4d Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Tue, 10 Nov 2026 05:29:47 +0800
 Subject: [RFC PATCH 11/16] mm: memcomp: account user eviction and refault
@@ -38,7 +38,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/storage.h          | 161 +++++++++++++++++++++++++++++-----
  mm/memcomp/swapoff.h          |   4 +
  mm/memcomp/workingset_load.h  |  97 ++++++++++++++++++++
- mm/memcomp/workingset_store.h |  53 +++++++++++
+ mm/memcomp/workingset_store.h |  52 +++++++++++
  mm/memcomp/writeback.h        |   3 +-
  mm/memcontrol.c               |  99 +++++++++++++++++++++
  mm/page_io.c                  |  42 +++++++++
@@ -47,7 +47,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/swapfile.c                 |  34 +++++++
  mm/vmscan.c                   |  14 ++-
  mm/workingset.c               |  32 +++++++
- 25 files changed, 916 insertions(+), 124 deletions(-)
+ 25 files changed, 915 insertions(+), 124 deletions(-)
  create mode 100644 mm/memcomp/workingset_load.h
  create mode 100644 mm/memcomp/workingset_store.h
 
@@ -515,10 +515,10 @@ index afdde325c0e5f442868e9354d9abc84ae354bb0a..e051b0ee2c350101bebe5bb75b8cb813
  out_unlock:
  	pte_unmap_unlock(vmf->pte, vmf->ptl);
 diff --git a/mm/memcomp/folio.h b/mm/memcomp/folio.h
-index 26a14d7ae2809ae60242f9c9fd6b25e378482b8b..18f1d232e87eef7972ec2182ec1e15289815315f 100644
+index de8eeed276d9af56816d31ce85bd9341a9ee34a7..99ef0d51bedf0c503375876873bea7feac93be42 100644
 --- a/mm/memcomp/folio.h
 +++ b/mm/memcomp/folio.h
-@@ -133,16 +133,20 @@ static inline void mc16_invalidate_folio(struct folio *folio)
+@@ -132,16 +132,20 @@ static inline void mc16_invalidate_folio(struct folio *folio)
  		put_anon_vma(anon_vma);
  }
  
@@ -547,7 +547,7 @@ index 26a14d7ae2809ae60242f9c9fd6b25e378482b8b..18f1d232e87eef7972ec2182ec1e1528
  
  	if (!folio_test_locked(folio) || !folio_memcomp_reserved(folio))
  		return false;
-@@ -155,50 +159,94 @@ static inline bool mc16_release_folio(struct folio *folio)
+@@ -154,50 +158,94 @@ static inline bool mc16_release_folio(struct folio *folio)
  		folio->swap.val = 0;
  		return true;
  	}
@@ -1291,17 +1291,16 @@ index 0000000000000000000000000000000000000000..f939a2d396ae4eb285ef782d771d7ea1
 +#endif /* _MM_MEMCOMP_WORKINGSET_LOAD_H */
 diff --git a/mm/memcomp/workingset_store.h b/mm/memcomp/workingset_store.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..f4f81a2adf3229164ed30a8d745e1cc21a53d606
+index 0000000000000000000000000000000000000000..32629bb1e9ea1793f756ec8856371bd474e182d8
 --- /dev/null
 +++ b/mm/memcomp/workingset_store.h
-@@ -0,0 +1,53 @@
+@@ -0,0 +1,52 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_WORKINGSET_STORE_H
 +#define _MM_MEMCOMP_WORKINGSET_STORE_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after storage/access/refs. A slot guard protects the side word;
 + * its token mutex T serializes every change. PUBLISHING excludes payload

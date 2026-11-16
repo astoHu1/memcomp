@@ -1,4 +1,4 @@
-From db87354809cf50a6dad48bc013dcf8d25ca81d77 Mon Sep 17 00:00:00 2001
+From 253dcd3f88f2436b4312c05e1b54289e085fa549 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:11:07 +0800
 Subject: [RFC PATCH 13/16] mm: memcomp: add KUnit tests
@@ -66,7 +66,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/tests/enospc_test.h                |  236 ++
  mm/memcomp/tests/fault_alloc_test.h           |  119 +
  mm/memcomp/tests/fault_test.h                 |  851 ++++
- mm/memcomp/tests/folio_test.h                 |  770 ++++
+ mm/memcomp/tests/folio_test.h                 |  769 ++++
  mm/memcomp/tests/format_test.h                |  520 +++
  mm/memcomp/tests/late_async_test.h            |  331 ++
  mm/memcomp/tests/load_test.h                  |  133 +
@@ -78,7 +78,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/tests/public_driver_test.h         |  358 ++
  mm/memcomp/tests/query_test.h                 |  480 +++
  mm/memcomp/tests/refs_test.h                  |  224 ++
- mm/memcomp/tests/replacement_test.h           |  361 ++
+ mm/memcomp/tests/replacement_test.h           |  360 ++
  mm/memcomp/tests/resident_test.h              |  796 ++++
  mm/memcomp/tests/rollback_test.h              |  163 +
  mm/memcomp/tests/scan_test.h                  |  422 ++
@@ -88,7 +88,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/tests/span_test.h                  |  128 +
  mm/memcomp/tests/storage_fixture.h            |   84 +
  mm/memcomp/tests/storage_test.h               |  468 +++
- mm/memcomp/tests/store_transaction_test.h     |  588 +++
+ mm/memcomp/tests/store_transaction_test.h     |  587 +++
  mm/memcomp/tests/suite.h                      |  693 ++++
  mm/memcomp/tests/swapoff_test.h               |  558 +++
  mm/memcomp/tests/swapoff_walk_test.h          |  562 +++
@@ -96,10 +96,10 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/tests/test_api.h                   |   41 +
  mm/memcomp/tests/transport_reclaim_test.h     |  298 ++
  mm/memcomp/tests/transport_test.h             |  114 +
- mm/memcomp/tests/workingset_load_test.h       | 1096 ++++++
+ mm/memcomp/tests/workingset_load_test.h       | 1095 ++++++
  mm/memcomp/tests/workingset_mthp_error_test.h |  164 +
  mm/memcomp/tests/workingset_storage_test.h    |  442 +++
- mm/memcomp/tests/workingset_store_test.h      |  573 +++
+ mm/memcomp/tests/workingset_store_test.h      |  572 +++
  mm/memcomp/tests/writeback_batch_test.h       |  688 ++++
  mm/memcomp/tests/writeback_test.h             |  540 +++
  mm/memcomp/tests/zero_callers_test.h          |  717 ++++
@@ -112,7 +112,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/writeback_batch.h                  |   12 +
  mm/memcomp/zero_load.h                        |   20 +
  mm/mincore.c                                  |   21 +
- 78 files changed, 30873 insertions(+)
+ 78 files changed, 30868 insertions(+)
  create mode 100644 mm/memcomp/tests/.kunitconfig
  create mode 100644 mm/memcomp/tests/access_test.h
  create mode 100644 mm/memcomp/tests/aging_test.h
@@ -9559,10 +9559,10 @@ index 0000000000000000000000000000000000000000..789362b732660e8d9db0961c10af7510
 +#endif /* _MM_MEMCOMP_TESTS_FAULT_TEST_H */
 diff --git a/mm/memcomp/tests/folio_test.h b/mm/memcomp/tests/folio_test.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..b504a66ecaa6c002e162b9b0d5d2bc226fae08fd
+index 0000000000000000000000000000000000000000..111ffc3bcaef6160bf3288af39fcb08bca9ce116
 --- /dev/null
 +++ b/mm/memcomp/tests/folio_test.h
-@@ -0,0 +1,770 @@
+@@ -0,0 +1,769 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_TESTS_FOLIO_TEST_H
 +#define _MM_MEMCOMP_TESTS_FOLIO_TEST_H
@@ -9574,7 +9574,6 @@ index 0000000000000000000000000000000000000000..b504a66ecaa6c002e162b9b0d5d2bc22
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after folio.h, resident.h, load.h and consumers_test.h. Register the
 + * cases below under MC16_FOLIO_TEST_ENABLED. The objcg/slot-allocation probe
@@ -14746,17 +14745,16 @@ index 0000000000000000000000000000000000000000..a147f4155eba2c540ea3b469a0767297
 +#endif /* _MM_MEMCOMP_TESTS_REFS_TEST_H */
 diff --git a/mm/memcomp/tests/replacement_test.h b/mm/memcomp/tests/replacement_test.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..c51a773a2a873df1a5107bdac30493e1f8ad93f4
+index 0000000000000000000000000000000000000000..ee212cec936070398831df9b6c93a8999427ac5d
 --- /dev/null
 +++ b/mm/memcomp/tests/replacement_test.h
-@@ -0,0 +1,361 @@
+@@ -0,0 +1,360 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_TESTS_REPLACEMENT_TEST_H
 +#define _MM_MEMCOMP_TESTS_REPLACEMENT_TEST_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after store_transaction_test.h in suite.h.
 + * Register the four cases below under MC16_REPLACEMENT_TEST_ENABLED.
@@ -21166,17 +21164,16 @@ index 0000000000000000000000000000000000000000..a3a03336d57c61af0c91fff79cec9b63
 +#endif /* _MM_MEMCOMP_TESTS_STORAGE_TEST_H */
 diff --git a/mm/memcomp/tests/store_transaction_test.h b/mm/memcomp/tests/store_transaction_test.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..ca6d88c770775e2fbbaac82412e388d816d3b89a
+index 0000000000000000000000000000000000000000..5dc421a4c5c96cd5a5e6cad5f19fb3094cbfdb3e
 --- /dev/null
 +++ b/mm/memcomp/tests/store_transaction_test.h
-@@ -0,0 +1,588 @@
+@@ -0,0 +1,587 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_TESTS_STORE_TRANSACTION_TEST_H
 +#define _MM_MEMCOMP_TESTS_STORE_TRANSACTION_TEST_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after folio_test.h in suite.h. Register the
 + * eight cases below under MC16_STORE_TRANSACTION_TEST_ENABLED. The enclosing
@@ -24600,17 +24597,16 @@ index 0000000000000000000000000000000000000000..e2c7a7172386900872d48950fad047d1
 +#endif /* _MM_MEMCOMP_TESTS_TRANSPORT_TEST_H */
 diff --git a/mm/memcomp/tests/workingset_load_test.h b/mm/memcomp/tests/workingset_load_test.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..d73fe1307c3934164a7173825bb6c59aab2056f7
+index 0000000000000000000000000000000000000000..70d178f6727d56cbee4ae9b76eaa97b9a6f75fd4
 --- /dev/null
 +++ b/mm/memcomp/tests/workingset_load_test.h
-@@ -0,0 +1,1096 @@
+@@ -0,0 +1,1095 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_TESTS_WORKINGSET_LOAD_TEST_H
 +#define _MM_MEMCOMP_TESTS_WORKINGSET_LOAD_TEST_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after fault_test.h. Real MM, payload, charge and stock workingset.
 + * Required observation seam: at the start of mc16_load_page(), after local
@@ -26320,17 +26316,16 @@ index 0000000000000000000000000000000000000000..fdc7a035359523d82c9fb0590cde2928
 +#endif /* _MM_MEMCOMP_TESTS_WORKINGSET_STORAGE_TEST_H */
 diff --git a/mm/memcomp/tests/workingset_store_test.h b/mm/memcomp/tests/workingset_store_test.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..97c6d0c7cd3e9edd3ba671b8e4271586133679f0
+index 0000000000000000000000000000000000000000..ea6d1d49c272293188b04702b987ebe0a78866c2
 --- /dev/null
 +++ b/mm/memcomp/tests/workingset_store_test.h
-@@ -0,0 +1,573 @@
+@@ -0,0 +1,572 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_TESTS_WORKINGSET_STORE_TEST_H
 +#define _MM_MEMCOMP_TESTS_WORKINGSET_STORE_TEST_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after cache_folio_test.h, folio_test.h and store_transaction_test.h.
 + * Register the cases under MC16_WORKINGSET_STORE_TEST_ENABLED. Sources, guards,
@@ -31808,10 +31803,10 @@ index 0000000000000000000000000000000000000000..845d6ac29c3f650b19c9d3f13bafe610
 +
 +#endif /* _MM_MEMCOMP_TESTS_ZERO_TEST_H */
 diff --git a/mm/memcomp/workingset_store.h b/mm/memcomp/workingset_store.h
-index f4f81a2adf3229164ed30a8d745e1cc21a53d606..1d119604ea935af16be56744c1a340cdd37d1242 100644
+index 32629bb1e9ea1793f756ec8856371bd474e182d8..7943f4d43d675a2bb223912d75a6b88ac400b1db 100644
 --- a/mm/memcomp/workingset_store.h
 +++ b/mm/memcomp/workingset_store.h
-@@ -11,7 +11,17 @@
+@@ -10,7 +10,17 @@
   * readers and background actors, not token reference removal by PTE zap.
   * Only a source OWNER in its first PENDING epoch can open this gate.
   */

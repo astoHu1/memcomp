@@ -45,14 +45,16 @@ The prerequisite commits are backports and small fixes that let the
 series apply and run on 6.12. They are not part of the proposal and will
 be dropped on a newer base.
 
-The source trees are fixed, so they identify the series even after the
-commits are re-signed:
+The source trees identify the series independently of commit
+signatures:
 
-- mainline series v1: tree `8f5623ffce75e000d508c35257eadc13af89c80f`
-- ACK series v1: tree `4b45de7370f4d25b667776d02e7675c774dd1d08`
+- mainline series v1: tree `06b510f011f66cb14e8a5dd4d00d72a3a1a0a7a5`
+- ACK series v1: tree `d37a8c4e747f5803f954ec434f42b0d1f003d567`
 
-The signed branch heads are `ff43474eaeb9` for mainline and
-`021862bfec30` for ACK.
+The signed branch heads are `07038a987384` for mainline and
+`713abbe0490a` for ACK. Before posting, seven header-comment lines were
+removed; the earlier trees, `8f5623ffce75` and `4b45de7370f4`, differ only
+by those lines.
 
 [patches/v1/](patches/v1/) contains the mainline series exported with
 `git format-patch` and its cover letter. The patches are signed off.

@@ -244,7 +244,8 @@ need `/dev/console` and a successful `tcdrain()` before timing, even with
 stdout redirected; they were written for the VM guests and may not work
 on every Android setup.
 
-memcomp_selftest was built from ACK series v1 (tree
+memcomp_selftest was built from ACK series v1 before seven
+header-comment lines were removed (tree
 `4b45de7370f4d25b667776d02e7675c774dd1d08`); BUILD-selftest.txt records
 its inputs, command and hash. The kernel tree holds its source. Do not
 run its swapoff test on a phone.

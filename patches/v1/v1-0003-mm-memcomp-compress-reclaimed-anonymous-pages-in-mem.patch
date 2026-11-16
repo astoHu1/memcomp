@@ -1,4 +1,4 @@
-From 8d4d037a495f6fcf6c25e42ff127d6afeae037b8 Mon Sep 17 00:00:00 2001
+From 650e848016c78a2444946a5847eddda91af4e330 Mon Sep 17 00:00:00 2001
 From: nakixii <nakixii@gmail.com>
 Date: Thu, 5 Nov 2026 20:10:59 +0800
 Subject: [RFC PATCH 03/16] mm: memcomp: compress reclaimed anonymous pages in
@@ -103,7 +103,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/memcomp/fault.h                            |  254 ++
  mm/memcomp/fault_alloc.h                      |   23 +
  mm/memcomp/fifo.h                             |  136 +
- mm/memcomp/folio.h                            |  387 ++
+ mm/memcomp/folio.h                            |  386 ++
  mm/memcomp/format.h                           |  308 ++
  mm/memcomp/lifetime.h                         |   87 +
  mm/memcomp/load.h                             |   59 +
@@ -124,7 +124,7 @@ Signed-off-by: nakixii <nakixii@gmail.com>
  mm/rmap.c                                     |   29 +-
  mm/swapfile.c                                 |   11 +
  mm/vmscan.c                                   |  313 +-
- 40 files changed, 8724 insertions(+), 12 deletions(-)
+ 40 files changed, 8723 insertions(+), 12 deletions(-)
  create mode 100644 mm/memcomp.c
  create mode 100644 mm/memcomp/access.h
  create mode 100644 mm/memcomp/anon_folio.h
@@ -5551,17 +5551,16 @@ index 0000000000000000000000000000000000000000..5da52894655a673f6b8e80e69859e41a
 +#endif /* _MM_MEMCOMP_FIFO_H */
 diff --git a/mm/memcomp/folio.h b/mm/memcomp/folio.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..26a14d7ae2809ae60242f9c9fd6b25e378482b8b
+index 0000000000000000000000000000000000000000..de8eeed276d9af56816d31ce85bd9341a9ee34a7
 --- /dev/null
 +++ b/mm/memcomp/folio.h
-@@ -0,0 +1,387 @@
+@@ -0,0 +1,386 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _MM_MEMCOMP_FOLIO_H
 +#define _MM_MEMCOMP_FOLIO_H
 +
 +/*
 + * Author: nakixii
-+ * Assisted-by: LLM
 + *
 + * Include after the generic eligibility, PTE-map/resident-map, hash/statistics
 + * helpers and the mc16 anon/span/owner helpers. Production dispatch is separate.
