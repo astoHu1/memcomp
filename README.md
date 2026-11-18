@@ -116,6 +116,10 @@ bench/e2e/validate-log.sh <guest-log>
 Each script describes its arguments in its header. Run pressure and
 swapoff tests only in disposable VMs.
 
+On Apple Silicon, [the macOS smoke test](bench/macos/README.md) builds an
+arm64 kernel on the host and runs the writeback/refault check in a disposable
+guest using Apple's Virtualization framework.
+
 ## Rerunning the comparison
 
 The comparison code is in [bench/compare/](bench/compare/), and

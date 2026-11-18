@@ -21,6 +21,10 @@
 #define ZT_WP (UINT64_C(1) << 57)
 #define ZT_EXCLUSIVE (UINT64_C(1) << 56)
 #define ZT_SOFT_DIRTY (UINT64_C(1) << 55)
+/* The x86 E2E config enables MEM_SOFT_DIRTY; arm64 on 6.12 cannot. */
+#ifndef MCWB_SOFT_DIRTY
+#define MCWB_SOFT_DIRTY 1
+#endif
 #define ZT_FRAME ((UINT64_C(1) << 55) - 1)
 #define ZT_TYPE_MASK UINT64_C(31)
 #define ZT_ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
@@ -520,7 +524,7 @@ static void zt_move(struct zt_context *c)
 	    count[3], count[4], count[5]);
 	if (equal != ZT_PAGES || holes != ZT_PAGES ||
 	    count[0] || count[1] != ZT_PAGES || count[3] != ZT_PAGES / 2 ||
-	    count[5] != ZT_PAGES) {
+	    count[5] != (MCWB_SOFT_DIRTY ? ZT_PAGES : 0)) {
 		fail("zero/MOVE: lost token or exposed PTE bits");
 		goto out;
 	}
