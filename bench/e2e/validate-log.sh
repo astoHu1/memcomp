@@ -12,6 +12,10 @@ if [[ ! $FIRST =~ ^[1-9][0-9]*$ ]]; then
     exit 1
 fi
 console=$(tail -n +"$FIRST" -- "$LOG")
+if rg -q 'WARNING:|BUG:|Oops:|bad page|Kernel panic|general protection|Call Trace|KASAN:|Huh VM_FAULT_OOM|pagefault_out_of_memory|memcomp-diag:' <<< "$console"; then
+    echo "kernel diagnostic in guest log: $LOG" >&2
+    exit 1
+fi
 PREFIX='^\[mcwb[[:space:]]+[0-9]+\.[0-9]+\] RESULT:'
 count=$(rg -c "$PREFIX" <<< "$console" || true)
 if [ "$count" != 1 ]; then
@@ -45,10 +49,6 @@ elif [ "$coverage" = PARTIAL ] && [ "$skips" -gt 0 ]; then
     fi
 else
     echo "missing or inconsistent coverage: $result" >&2
-    exit 1
-fi
-if rg -q 'WARNING:|BUG:|Oops:|bad page|Kernel panic|general protection|Call Trace|KASAN:' <<< "$console"; then
-    echo "kernel diagnostic in guest log: $LOG" >&2
     exit 1
 fi
 printf '%s\n' "$result"

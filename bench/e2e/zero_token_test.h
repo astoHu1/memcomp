@@ -20,11 +20,6 @@
 #define ZT_FILE (UINT64_C(1) << 61)
 #define ZT_WP (UINT64_C(1) << 57)
 #define ZT_EXCLUSIVE (UINT64_C(1) << 56)
-#define ZT_SOFT_DIRTY (UINT64_C(1) << 55)
-/* The x86 E2E config enables MEM_SOFT_DIRTY; arm64 on 6.12 cannot. */
-#ifndef MCWB_SOFT_DIRTY
-#define MCWB_SOFT_DIRTY 1
-#endif
 #define ZT_FRAME ((UINT64_C(1) << 55) - 1)
 #define ZT_TYPE_MASK UINT64_C(31)
 #define ZT_ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
@@ -428,9 +423,10 @@ static void zt_move(struct zt_context *c)
 	struct zt_mapping src = { 0 }, dst = { 0 };
 	uint64_t before[ZT_PAGES], after[ZT_PAGES], base = 0;
 	static const uint64_t bits[] = {
-		ZT_PRESENT, ZT_SWAP, ZT_FILE, ZT_WP, ZT_EXCLUSIVE, ZT_SOFT_DIRTY,
+		ZT_PRESENT, ZT_SWAP, ZT_FILE, ZT_WP, ZT_EXCLUSIVE, MCWB_PM_SOFT_DIRTY,
 	};
 	unsigned long count[ZT_ARRAY_SIZE(bits)] = { 0 };
+	bool softdirty_ok;
 	unsigned int retry = 0;
 	size_t i, j, moved = 0, equal = 0, holes = 0;
 	int fd = -1;
@@ -518,13 +514,22 @@ static void zt_move(struct zt_context *c)
 		for (j = 0; j < ZT_ARRAY_SIZE(bits); j++)
 			count[j] += !!(after[i] & bits[j]);
 	}
-	say("zero/MOVE: moved=%zu/%lu raw64_equal=%zu holes=%zu retries=%u; "
-	    "present=%lu swap=%lu file=%lu WP=%lu exclusive=%lu softdirty=%lu",
-	    moved, ZT_PAGES, equal, holes, retry, count[0], count[1], count[2],
-	    count[3], count[4], count[5]);
+	if (check_soft_dirty("zero/MOVE soft-dirty bit")) {
+		say("zero/MOVE: moved=%zu/%lu raw64_equal=%zu holes=%zu retries=%u; "
+		    "present=%lu swap=%lu file=%lu WP=%lu exclusive=%lu softdirty=%lu",
+		    moved, ZT_PAGES, equal, holes, retry, count[0], count[1], count[2],
+		    count[3], count[4], count[5]);
+		softdirty_ok = count[5] == ZT_PAGES;
+	} else {
+		say("zero/MOVE: moved=%zu/%lu raw64_equal=%zu holes=%zu retries=%u; "
+		    "present=%lu swap=%lu file=%lu WP=%lu exclusive=%lu softdirty=%lu (unsupported)",
+		    moved, ZT_PAGES, equal, holes, retry, count[0], count[1], count[2],
+		    count[3], count[4], count[5]);
+		softdirty_ok = count[5] == 0;
+	}
 	if (equal != ZT_PAGES || holes != ZT_PAGES ||
 	    count[0] || count[1] != ZT_PAGES || count[3] != ZT_PAGES / 2 ||
-	    count[5] != (MCWB_SOFT_DIRTY ? ZT_PAGES : 0)) {
+	    !softdirty_ok) {
 		fail("zero/MOVE: lost token or exposed PTE bits");
 		goto out;
 	}

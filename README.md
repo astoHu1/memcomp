@@ -9,8 +9,8 @@ written to it.
 
 This repository holds RFC series v1 for Linux 6.12.23, the whitepaper,
 the test and comparison code, the comparison results and an Android
-phone test package. All results come from KVM guests; no phone results
-are reported.
+phone test package. The published comparison results come from KVM guests;
+no phone results are reported.
 
 ## Results in brief
 
@@ -32,7 +32,7 @@ The [whitepaper](whitepaper/memcomp-whitepaper.md) has the design, the
 method, every decision and the limits. A shorter Chinese summary is in
 [memcomp-post.zh.md](whitepaper/memcomp-post.zh.md). No phone results
 are reported, because the variables on a phone could not be controlled;
-all evaluation data come from KVM guests.
+all of those comparison data come from KVM guests.
 
 ## Kernel series
 
@@ -116,9 +116,9 @@ bench/e2e/validate-log.sh <guest-log>
 Each script describes its arguments in its header. Run pressure and
 swapoff tests only in disposable VMs.
 
-On Apple Silicon, [the macOS smoke test](bench/macos/README.md) builds an
-arm64 kernel on the host and runs the writeback/refault check in a disposable
-guest using Apple's Virtualization framework.
+On Apple Silicon, see [the macOS arm64 test guide](bench/macos/README.md)
+for VZ and QEMU TCG correctness runs. Those runs are separate from the
+published x86_64 KVM results.
 
 ## Rerunning the comparison
 

@@ -1,0 +1,2 @@
+# The nested unified diff uses a leading space on context lines.
+bench/macos/kernel-fixes.patch whitespace=-blank-at-eol,-space-before-tab

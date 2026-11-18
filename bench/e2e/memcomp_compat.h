@@ -124,6 +124,7 @@ static void compat_test(void)
 	char *p = MAP_FAILED, *dest = MAP_FAILED, *copy = NULL;
 	int pm = -1, status;
 	pid_t child;
+	bool soft_dirty;
 	size_t i, j;
 	int64_t owner0 = EV("folio_owner_pages");
 	int64_t pending0 = EV("pending_pages");
@@ -144,10 +145,12 @@ static void compat_test(void)
 		for (j = 0; j < PG; j++)
 			p[i * PG + j] = compat_byte(i, j);
 
-	/* clear_refs must alter non-present memcomp PTEs too (CRIU). */
-	if (!compat_pageout(pm, p, "soft-dirty"))
+	/* Even without soft-dirty tracking, pageout and refault must preserve data. */
+	soft_dirty = check_soft_dirty("compat soft-dirty clear_refs/read/write");
+	if (!compat_pageout(pm, p, soft_dirty ? "soft-dirty" : "refault"))
 		goto out;
-	{
+	if (soft_dirty) {
+		/* clear_refs must alter non-present memcomp PTEs too (CRIU). */
 		int fd = open("/proc/self/clear_refs", O_WRONLY);
 
 		if (fd < 0 || write(fd, "4", 1) != 1) {
@@ -157,22 +160,24 @@ static void compat_test(void)
 			goto out;
 		}
 		close(fd);
+		for (i = 0; i < COMPAT_PAGES; i++)
+			if (pagemap_entry(pm, p + i * PG) & MCWB_PM_SOFT_DIRTY)
+				fail("compat: soft-dirty not cleared at page %zu", i);
 	}
-	for (i = 0; i < COMPAT_PAGES; i++)
-		if (pagemap_entry(pm, p + i * PG) & (1ULL << 55))
-			fail("compat: soft-dirty not cleared at page %zu", i);
 	if (compat_bad(p))
-		fail("compat: read fault corrupted soft-dirty region");
-	for (i = 0; i < COMPAT_PAGES; i++) {
-		if (pagemap_entry(pm, p + i * PG) & (1ULL << 55))
-			fail("compat: read fault dirtied page %zu", i);
-		/* A volatile store of the same byte must still fault writable. */
-		*(volatile char *)(p + i * PG) = compat_byte(i, 0);
-		if (!(pagemap_entry(pm, p + i * PG) & (1ULL << 55)))
-			fail("compat: write not soft-dirty at page %zu", i);
+		fail("compat: read fault corrupted token contents");
+	if (soft_dirty) {
+		for (i = 0; i < COMPAT_PAGES; i++) {
+			if (pagemap_entry(pm, p + i * PG) & MCWB_PM_SOFT_DIRTY)
+				fail("compat: read fault dirtied page %zu", i);
+			/* A volatile store of the same byte must still fault writable. */
+			*(volatile char *)(p + i * PG) = compat_byte(i, 0);
+			if (!(pagemap_entry(pm, p + i * PG) & MCWB_PM_SOFT_DIRTY))
+				fail("compat: write not soft-dirty at page %zu", i);
+		}
+		say("compat soft-dirty: clear_refs/read/write checked %lu pages",
+		    COMPAT_PAGES);
 	}
-
-	say("compat soft-dirty: clear_refs/read/write checked %lu pages", COMPAT_PAGES);
 	if (!compat_pageout(pm, p, "mincore") || !compat_mincore(pm, p))
 		goto out;
 	if (madvise(p, bytes, MADV_WILLNEED) ||

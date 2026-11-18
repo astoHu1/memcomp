@@ -40,7 +40,7 @@ static long long now_ms(void)
 	clock_gettime(CLOCK_MONOTONIC, &t);
 	return (long long)t.tv_sec * 1000 + t.tv_nsec / 1000000;
 }
-static void finish(int rc)
+static _Noreturn void finish(int rc)
 {
 	int status = 0, reaped = worker < 0, e = 0;
 	long long until = now_ms() + 3000;
@@ -75,7 +75,7 @@ static void finish(int rc)
 	if (authorized) reboot(RB_POWER_OFF);
 	_exit(rc);
 }
-static void die(const char *s)
+static _Noreturn void die(const char *s)
 {
 	fprintf(stderr, "S08-FAIL %s errno=%d (%s)\n", s, errno, strerror(errno));
 	fflush(NULL);
@@ -206,7 +206,8 @@ static char receive(int fd)
 {
 	struct pollfd p = { .fd = fd, .events = POLLIN }; char c;
 	int n = poll(&p, 1, child_process ? 150000 : 10000);
-	check(n > 0 && !expired && read(fd, &c, 1) == 1, "pipe timeout/EOF");
+	if (n <= 0 || expired || read(fd, &c, 1) != 1)
+		die("pipe timeout/EOF");
 	return c;
 }
 static void sendbyte(int fd, char c) { check(write(fd, &c, 1) == 1, "pipe write"); }
