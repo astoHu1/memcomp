@@ -10,6 +10,10 @@ checks.
 
 ## Run
 
+Use `s08` for the supported tmpfs check. `minimal` is an opt-in diagnostic:
+it has failed the anonymous `memory.current` lower bound on the RFC v1 VZ
+kernel and is not part of the default macOS test run.
+
 Use a prebuilt arm64 `Image`, its corresponding `.config` and
 `include/config/kernel.release` in the same build output, and the matching
 MC16 source tree. Use the existing Homebrew LLVM/LLD, aarch64-musl sysroot,
@@ -20,9 +24,6 @@ and report `block_devices=0` in the VZ setup receipt.
 From the repository root, for example:
 
 ```sh
-python3 -B bench/memcg/vz.py minimal \
-    --kernel-tree kernel-src/linux-mainline --kernel-out build/macos-e2e \
-    --out /tmp/memcg-vz-minimal
 python3 -B bench/memcg/vz.py s08 \
     --kernel-tree kernel-src/linux-mainline --kernel-out build/macos-e2e \
     --out /tmp/memcg-vz-s08

@@ -1,5 +1,9 @@
 # Post-swapon memcomp KUnit on VZ
 
+This diagnostic path is not part of the default macOS test run. On the RFC v1
+VZ kernel the live run passed five cases and failed five. Use it to investigate
+those failures, not as a prerequisite for the supported VZ E2E path.
+
 This standalone init runs `swap-memcomp-budget` and
 `swap-memcomp-packed-budget` serially on the 6.12 memcomp writeback kernel.
 There is no E2E payload, pressure workload, or concurrent suite execution

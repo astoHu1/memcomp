@@ -10,12 +10,12 @@ Virtualization Framework (VZ) 启动一次性 guest。它不是 Docker/Linux
 
 | 原测试 | macOS arm64 路径 |
 | --- | --- |
-| 有盘、无盘 E2E；MM selftest | `e2e.config`，`run.sh`；`SWAP_MB=0` 不附加任何磁盘 |
+| 有盘、无盘 E2E；MM selftest；KSM | `e2e.config`，`run.sh` 默认运行；`SWAP_MB=0` 不附加任何磁盘 |
 | KSM；HMM 模块 | `RUN_KSM=1`；打包 `hmm.config` 内核后加 `RUN_HMM=1 HMM_MODULE=1` |
 | MGLRU / classic LRU KUnit | 基础配置 / `classic-kunit.config`，用独立 guest 和 `KUNIT_ONLY=1` |
-| 真实 swap budget KUnit | `swap-kunit.config`，[单盘独立 guest](../kunit-swap/README.md) 在 swapon 后串行执行 |
-| 两节点 NUMA；MTE；授权 MM swapoff | [QEMU TCG](tcg.md)，不等同于 VZ、KVM 或真机 |
-| 独立 memcg 归属、释放与 tmpfs 回读 | [memcg VZ collectors](../memcg/README.md) |
+| 真实 swap budget KUnit | [实验性入口](../kunit-swap/README.md)，已观察到断言失败，不纳入默认验收 |
+| 两节点 NUMA；MTE；授权 MM swapoff | 不在 VZ 跑；保留 [QEMU TCG](tcg.md) 实验性入口 |
+| 独立 memcg tmpfs 回读 | [S08](../memcg/README.md) 可单独跑；匿名归属检查已有失败，不纳入默认验收 |
 | compare 工作负载 | [VZ 功能跑法](compare.md)，不进入正式性能矩阵 |
 
 Linux 6.12 arm64 的两处正向 soft-dirty 断言单独计为跳过，其余 compat、
@@ -30,6 +30,9 @@ MM selftest 的 swapoff 在 VZ 仍受原来的 QEMU 身份门禁限制；这不�
 `xcrun swiftc`、macOS SDK 和 `codesign` 的 Xcode/Command Line Tools。
 runner 会检查 `VZVirtualMachine.isSupported` 并验证虚拟机配置；
 `build-runner.sh` 使用本目录的 virtualization entitlement 进行临时签名。
+如果预检报告当前进程无法使用 VZ，请在 macOS 本地终端运行
+`build/macos-vz/vz-runner --check`。受限沙箱可能禁止使用 VZ，即使
+同一台 Mac 能从本地终端启动 guest。
 
 Homebrew 依赖为 LLVM、lld、GNU make、coreutils、GNU sed、findutils、
 GNU grep、GNU tar、bison、flex、cmake，脚本还直接使用 ripgrep (`rg`)：
@@ -147,11 +150,15 @@ OUT="$PWD/build/macos-kunit" KUNIT_ONLY=1 bash bench/macos/run.sh
 
 ```sh
 bash bench/macos/run.sh
-SWAP_MB=0 bash bench/macos/run.sh '' RUN_SELFTEST=1
+SWAP_MB=0 bash bench/macos/run.sh
 ```
 
-无 guest 参数时默认传 `RUN_SELFTEST=1`。有任意显式 guest 参数时，不再
-补这个默认值，需要自行指定。`run.sh [新结果目录] [guest 参数...]`
+无 guest 参数时运行实测的 VZ 配置，包含 `RUN_KSM=1 RUN_SELFTEST=1`，
+并要求 E2E 的三处预期跳过与日志一致。有盘默认配置为 1 GiB RAM、
+2 GiB 私有 swap 盘，使用下节的写回压力参数；无盘只验证内存内路径。
+有任意显式 guest 参数时，不补入这些参数或默认跳过数量；变更有盘
+默认配置的 RAM 或盘大小时也须显式给出 guest 参数。
+`run.sh [新结果目录] [guest 参数...]`
 的第一个位置参数始终是结果目录；省略目录但要传 guest 参数时可用
 `bash bench/macos/run.sh '' RUN_SELFTEST=1`。显式目录必须尚不存在，
 脚本用 `mkdir` 防止复用；省略时在 `results/macos-vz/run.XXXXXXXX`
@@ -171,12 +178,12 @@ swapoff 操作只允许在这种可丢弃 guest 中执行，不在 macOS 主机�
 
 ## 有盘写回复现
 
-以下参数在 1 GiB VZ guest 上通过了有盘 E2E 门禁。默认 E2E 参数在同一
-环境的首轮没有及时触发写回；这里提高填充压力，不关闭任何 E2E 阶段。
-复跑须保留各自的结果目录，不能用历史通过替代当轮结果。
+不带 guest 参数的 `run.sh` 使用下列参数。原 x86 E2E 参数在 VZ 上
+没有稳定触发写回，因此使用更大的填充量与自然 reclaim 压力；不关闭
+任何 E2E 阶段。需要定制 guest 参数时，可以从这条等效命令开始：
 
 ```sh
-E2E_SKIPS=3 MEMORY_MB=1024 TIMEOUT=860 bash bench/macos/run.sh '' \
+E2E_SKIPS=3 MEMORY_MB=1024 SWAP_MB=2048 bash bench/macos/run.sh '' \
   RUN_KSM=1 RUN_SELFTEST=1 \
   FILL_MB=1792 PRESS_MB=64 CHUNK_MB=4 \
   PAGEOUT_LAG=0 PACE_US=3000 THP=never WB_WAIT_S=10 \
@@ -192,7 +199,20 @@ E2E_SKIPS=3 MEMORY_MB=1024 TIMEOUT=860 bash bench/macos/run.sh '' \
 
 这组参数只跑一轮 cycles、3 秒并发回读，并非与历史 KVM 运行配对。
 三项计数跳过是两处 soft-dirty 和 MM selftest 通过部分 TAP 后报告的跳过。
-HMM 在单独的 `hmm.config` 内核上跑。
+
+### 可选 HMM 模块测试
+
+HMM 使用单独的内核和 initramfs。下列无盘配置只跑 HMM 所需的
+功能路径，不重复默认 E2E 的 churn、cycles 和并发压力阶段：
+
+```sh
+export OUT="$PWD/build/macos-hmm"
+CONFIG_FRAGMENT="$PWD/bench/macos/hmm.config" bash bench/macos/build.sh --configure
+INITRAMFS_OUT="$OUT/guest" KERNEL_UAPI_OUT="$OUT/uapi" bash bench/macos/mkinitramfs.sh
+INITRAMFS="$OUT/guest/initramfs.gz" SWAP_MB=0 TIMEOUT=240 bash bench/macos/run.sh '' \
+  RUN_HMM=1 HMM_MODULE=1 RUN_KSM=1 kfence.sample_interval=1 loglevel=7 \
+  TEST_TIMEOUT=180 SKIP_CHURN=1 SKIP_CYCLES=1 SKIP_CONC=1
+```
 
 ## 日志、覆盖与验收边界
 
@@ -220,7 +240,7 @@ KSM 和 HMM 时还要求对应结果通过。原 KVM 验收入口不变。
 命令前设置该 host 环境变量，或对已有日志执行：
 
 ```sh
-REQUIRE_COMPLETE=1 bash bench/macos/run.sh '' RUN_SELFTEST=1
+REQUIRE_COMPLETE=1 bash bench/macos/run.sh
 ```
 
 该设置只收紧验收，不会补跑跳过的用例。超时、崩溃、缺失 RESULT、

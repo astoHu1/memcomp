@@ -7,7 +7,6 @@ RESULT_ARG=${1:-}
 if [ "$#" -gt 0 ]; then
     shift
 fi
-mkdir -p "$ROOT/results/macos-vz"
 KERNEL="$OUT/arch/arm64/boot/Image"
 INITRAMFS=${INITRAMFS:-$ROOT/build/macos-userspace/initramfs.gz}
 RUNNER="$ROOT/build/macos-vz/vz-runner"
@@ -19,6 +18,10 @@ VZ_CPUS=${CPUS:-4}
 VZ_TIMEOUT=${TIMEOUT:-900}
 VZ_SWAP_MB=${SWAP_MB:-2048}
 KUNIT_ONLY=${KUNIT_ONLY:-0}
+[[ $VZ_SWAP_MB =~ ^(0|[1-9][0-9]*)$ ]] || {
+    echo 'SWAP_MB must be an integer MiB (0 for no disk)' >&2
+    exit 2
+}
 KUNIT=0
 if rg -qx 'CONFIG_MEMCOMP_KUNIT_TEST=y' "$OUT/.config"; then
     KUNIT=1
@@ -31,12 +34,19 @@ if [ "$KUNIT_ONLY" = 1 ]; then
     }
     VZ_SWAP_MB=0
 elif [ "$#" -eq 0 ]; then
-    GUEST_ARGS=(RUN_SELFTEST=1)
+    GUEST_ARGS=(RUN_KSM=1 RUN_SELFTEST=1)
+    E2E_SKIPS=${E2E_SKIPS:-3}
+    if [ "$VZ_SWAP_MB" != 0 ]; then
+        if [[ $VZ_MEMORY_MB != 1024 || $VZ_SWAP_MB != 2048 ]]; then
+            echo 'default VZ writeback profile uses MEMORY_MB=1024 and SWAP_MB=2048; pass explicit guest arguments for other sizes' >&2
+            exit 2
+        fi
+        # Create natural reclaim pressure instead of releasing the fill early.
+        GUEST_ARGS+=(FILL_MB=1792 PRESS_MB=64 CHUNK_MB=4 PAGEOUT_LAG=0
+            PACE_US=3000 THP=never WB_WAIT_S=10 CYCLES=1 CONC_SECS=3
+            SWAPOFF_MB=1792 SWAPOFF_PRESS_MB=64 TEST_TIMEOUT=820 HEARTBEAT_S=15)
+    fi
 fi
-[[ $VZ_SWAP_MB =~ ^(0|[1-9][0-9]*)$ ]] || {
-    echo 'SWAP_MB must be an integer MiB (0 for no disk)' >&2
-    exit 2
-}
 BOOT_ARGS=()
 SELFTEST=0
 REQUIRE_SWAPOFF=1
@@ -76,6 +86,7 @@ elif [ "$VZ_SWAP_MB" = 0 ]; then
     BOOT_ARGS+=(NO_SWAP=1)
 fi
 CMDLINE="console=hvc0 rdinit=/init panic=-1 kunit.enable=$KUNIT ${BOOT_ARGS[*]}"
+"$RUNNER" --check
 if [ -n "$RESULT_ARG" ]; then
     parent=$(cd -P -- "$(dirname -- "$RESULT_ARG")" && pwd)
     case "$parent/" in
@@ -84,6 +95,7 @@ if [ -n "$RESULT_ARG" ]; then
     mkdir -- "$RESULT_ARG"
     RESULT=$(cd -P -- "$RESULT_ARG" && pwd)
 else
+    mkdir -p "$ROOT/results/macos-vz"
     RESULT=$(mktemp -d "$ROOT/results/macos-vz/run.XXXXXXXX")
 fi
 DISK=-

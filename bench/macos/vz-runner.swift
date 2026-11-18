@@ -7,6 +7,14 @@ func report(_ text: String) {
     FileHandle.standardError.write(Data((text + "\n").utf8))
 }
 
+func requireVirtualization() {
+    guard VZVirtualMachine.isSupported else {
+        report("Apple Virtualization is unavailable to this process.")
+        report("On a supported Apple Silicon Mac, run the signed runner from a local terminal outside any restricted sandbox.")
+        exit(2)
+    }
+}
+
 final class Runner: NSObject, VZVirtualMachineDelegate {
     private var machine: VZVirtualMachine!
     private var timer: Timer?
@@ -22,10 +30,7 @@ final class Runner: NSObject, VZVirtualMachineDelegate {
             report("usage: vz-runner Image initramfs disk|- console memoryMB cpus timeout cmdline host-info [ro:/path|rw:/path ...]")
             exit(2)
         }
-        guard VZVirtualMachine.isSupported else {
-            report("Apple Virtualization Framework is not supported on this host")
-            exit(2)
-        }
+        requireVirtualization()
         let config = VZVirtualMachineConfiguration()
         config.platform = VZGenericPlatformConfiguration()
         config.cpuCount = cpus
@@ -106,6 +111,12 @@ final class Runner: NSObject, VZVirtualMachineDelegate {
         report("VZ guest failed: \(error)")
         exit(1)
     }
+}
+
+if CommandLine.arguments.dropFirst().elementsEqual(["--check"]) {
+    requireVirtualization()
+    print("Apple Virtualization is available")
+    exit(0)
 }
 
 let runner = Runner()
