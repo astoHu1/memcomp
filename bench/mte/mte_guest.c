@@ -11,7 +11,6 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <inttypes.h>
-#include <linux/prctl.h>
 #include <signal.h>
 #include <stdint.h>
 #include <stdio.h>

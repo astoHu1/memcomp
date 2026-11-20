@@ -187,8 +187,8 @@ int main(void)
 	char b[8192];
 	int tx[2], rx[2], status;
 	struct utsname u;
-	if (getpid() != 1) {
-		fputs("FAIL guest requires PID 1 in disposable QEMU\n", stderr);
+	if (getpid() != 1 || geteuid() != 0) {
+		fputs("FAIL guest requires root PID 1 in a disposable VM\n", stderr);
 		return 77;
 	}
 	setvbuf(stdout, NULL, _IOLBF, 0);

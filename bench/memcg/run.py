@@ -56,13 +56,16 @@ def sha(path):
     return h.hexdigest()
 
 
-def evaluate(text, rc, entry_size=80, stable=True):
+def evaluate(text, rc, entry_size=80, stable=True, *, vz_binding=None):
     """Reject absent compression/metadata, not an exact byte equality test."""
     problems = []
     report = {'status': 'FAIL', 'scope': 'minimal-memcg-no-swap',
-              'tolerance_bytes': TOLERANCE, 'entry_size': entry_size}
+              'tolerance_bytes': TOLERANCE}
+    if vz_binding is None:
+        report['entry_size'] = entry_size
     try:
-        require(rc == 0, 'QEMU supervisor nonzero exit')
+        require(rc == 0, 'VZ runner nonzero exit' if vz_binding is not None else
+                'QEMU supervisor nonzero exit')
         require(stable, 'input/source/config changed during execution')
         require(not DIAGNOSTIC.search(text), 'guest/source diagnostic')
         require(text.count('MEMCG-COLLECTED') == 1, 'collector completion missing/duplicate')
@@ -70,23 +73,33 @@ def evaluate(text, rc, entry_size=80, stable=True):
                 'guest terminal status missing/contradictory')
         require(re.findall(r'^COMPRESSOR (\S+)\s*$', text, re.M) == ['zstd'],
                 'stock zstd not proven')
+        release = RELEASE if vz_binding is None else vz_binding['kernel_release']
         require(re.findall(r'^KERNEL release=(\S+)\s*$', text, re.M) ==
-                [RELEASE], 'running kernel release mismatch')
-        require(entry_size == 80, 'entry size disagrees with current layout')
+                [release], 'running kernel release mismatch')
         bindings = re.findall(r'^BINDING (.+)$', text, re.M)
         require(len(bindings) == 1, 'binding absent/duplicate')
         binding = json.loads(bindings[0])
-        require(binding['source_head'] == HEAD and binding['smp'] == 1 and
-                binding['swap_mb'] == 0 and binding['memory_mb'] == 1024,
-                'guest input binding mismatch')
+        if vz_binding is None:
+            require(entry_size == 80, 'entry size disagrees with current layout')
+            require(binding['source_head'] == HEAD and binding['smp'] == 1 and
+                    binding['swap_mb'] == 0 and binding['memory_mb'] == 1024,
+                    'guest input binding mismatch')
+            require(re.findall(r'^e2e-qemu: actual_exit=(\d+) timed_out=(\d+) '
+                               r'actual_death_verified=(\d+) group_drained=(\d+)\s*$',
+                               text, re.M) == [('0', '0', '1', '1')],
+                    'QEMU death/timeout receipt missing or failed')
+        else:
+            # The caller checks actual VZ shutdown, isolation, and artifact hashes.
+            require(binding == vz_binding, 'guest input binding mismatch')
+            swaps = re.findall(r'^RAW proc\.swaps\n([^\n]*)\n(?=BINDING )', text, re.M)
+            require(text.count('RAW proc.swaps') == len(swaps) == 1 and
+                    swaps[0].split() == ['Filename', 'Type', 'Size', 'Used', 'Priority'],
+                    'guest swap header missing or swap present')
         workers = re.findall(r'^WORKER pid=(\d+) pages=(\d+)\s*$', text, re.M)
         require(len(workers) == 1 and int(workers[0][1]) == PAGES,
                 'worker identity/count missing')
         worker = int(workers[0][0])
         require(worker > 1, 'invalid guest worker pid')
-        require(re.findall(r'^e2e-qemu: actual_exit=(\d+) timed_out=(\d+) '
-                           r'actual_death_verified=(\d+) group_drained=(\d+)\s*$', text, re.M)
-                == [('0', '0', '1', '1')], 'QEMU death/timeout receipt missing or failed')
         raw = {}
         for phase, category, body in re.findall(
                 r'^RAW phase=(\w+) (memory\.stat|memory\.events|cgroup\.procs)\n'
@@ -137,21 +150,30 @@ def evaluate(text, rc, entry_size=80, stable=True):
         require(c['pool'] >= payload, 'allocator pool smaller than payload')
         require(abs(delta(c, b, 'anon')) <= TOLERANCE, 'compressed anon retained')
         require(delta(f, c, 'current') >= want // 2, 'no meaningful memory.current reduction')
-        metadata = PAGES * entry_size
-        expected = payload + metadata
         overhead = sum(delta(c, b, k) for k in SUBCOMPONENTS)
         observed_current = delta(c, b, 'current') - delta(c, b, 'anon') - delta(c, b, 'file') - overhead
         observed_kernel = delta(c, b, 'kernel') - overhead
-        lower, upper = expected - TOLERANCE, expected + TOLERANCE
-        require(metadata > 2 * TOLERANCE, 'test cannot distinguish missing metadata')
-        require(lower > payload, 'lower bound permits absent metadata')
-        require(lower <= observed_current <= upper, 'memory.current payload+entry charge outside bounds')
-        require(lower <= observed_kernel <= upper, 'memory.stat kernel objcg charge outside bounds')
+        if vz_binding is None:
+            min_metadata = max_metadata = PAGES * entry_size
+            report.update(metadata_bytes=min_metadata,
+                          expected_objcg_bytes=payload + min_metadata)
+        else:
+            # MC16 order-0: ksize(64-byte record + 24-byte member) is
+            # 96 or 128 on this arm64 port. The small shared key charge is
+            # within the existing tolerance; accounted slab is subtracted above.
+            min_metadata, max_metadata = PAGES * 96, PAGES * 128
+            report['metadata_model'] = 'mc16-arm64-order0-record'
+            report['metadata_bytes_range'] = [min_metadata, max_metadata]
+        lower = payload + min_metadata - TOLERANCE
+        upper = payload + max_metadata + TOLERANCE
         report.update(stored_bytes=stored, payload_bytes=payload,
-                      metadata_bytes=metadata, expected_objcg_bytes=expected,
                       observed_current_objcg_bytes=observed_current,
                       observed_kernel_objcg_bytes=observed_kernel,
                       lower_bound=lower, upper_bound=upper, samples=samples)
+        require(min_metadata > 2 * TOLERANCE, 'test cannot distinguish missing metadata')
+        require(lower > payload, 'lower bound permits absent metadata')
+        require(lower <= observed_current <= upper, 'memory.current payload+entry charge outside bounds')
+        require(lower <= observed_kernel <= upper, 'memory.stat kernel objcg charge outside bounds')
         for s in released:
             require(s['stored'] == s['payload'] == 0, 'memcomp objects/payload retained after munmap')
             require(abs(delta(s, b, 'current')) <= TOLERANCE, 'memory.current did not return to baseline band')

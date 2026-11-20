@@ -54,6 +54,7 @@
 #define PAGES_PER_MB 256UL
 #define SWAPDEV "/dev/vda"
 #define MCDIR "/sys/kernel/mm/memcomp/"
+#define MCWB_PM_SOFT_DIRTY (UINT64_C(1) << 55)
 
 /* ------------------------------------------------------------------ */
 /* parameters                                                          */
@@ -228,6 +229,7 @@ static uint64_t kv(const char *buf, const char *key)
 struct snap {
 	uint64_t stored, compressed, pool;
 	uint64_t wb_payloads, wb_budget, wb_events, wb_scans, wb_zrecl;
+	/* wb_scopes is instantaneous; wb_events counts scope openings. */
 	uint64_t wb_noprog, wb_limited, wb_derr, wb_werr, wb_scopes;
 	uint64_t sw_entries, sw_read_io, sw_read_err;
 	uint64_t so_entries, so_read_io, so_fail;
@@ -235,12 +237,16 @@ struct snap {
 	uint64_t pl_compress, pl_fallback;
 	uint64_t memtotal, memfree, swaptotal, swapfree, anon;
 	uint64_t pswpin, pswpout, oom_kill;
+	uint64_t pgscan_kswapd, pgscan_direct, pgsteal_kswapd, pgsteal_direct;
+	uint64_t allocstall;
 };
 
 static char sbuf[1 << 16];
 
 static void take_snap(struct snap *s)
 {
+	const char *p;
+
 	memset(s, 0, sizeof(*s));
 	if (read_file(MCDIR "stat", sbuf, sizeof(sbuf)))
 		{
@@ -287,6 +293,22 @@ static void take_snap(struct snap *s)
 	s->pswpin = kv(sbuf, "pswpin");
 	s->pswpout = kv(sbuf, "pswpout");
 	s->oom_kill = kv(sbuf, "oom_kill");
+	s->pgscan_kswapd = kv(sbuf, "pgscan_kswapd");
+	s->pgscan_direct = kv(sbuf, "pgscan_direct");
+	s->pgsteal_kswapd = kv(sbuf, "pgsteal_kswapd");
+	s->pgsteal_direct = kv(sbuf, "pgsteal_direct");
+	/* Zone names vary with the architecture and kernel configuration. */
+	for (p = sbuf; p && *p; ) {
+		if (!strncmp(p, "allocstall_", sizeof("allocstall_") - 1)) {
+			char key[64];
+
+			if (sscanf(p, "%63s", key) == 1)
+				s->allocstall += kv(p, key);
+		}
+		p = strchr(p, '\n');
+		if (p)
+			p++;
+	}
 }
 
 #define MB(b) ((double)(b) / 1048576.0)
@@ -315,6 +337,10 @@ static void print_snap(const char *label, const struct snap *s)
 	    label, s->owner, s->pending, s->samefill, s->raw, s->po_ok,
 	    s->po_fail, s->pl_compress, s->pl_fallback, s->pswpin,
 	    s->pswpout, s->oom_kill);
+	say("[%s] reclaim pgscan_kswapd=%lu pgsteal_kswapd=%lu "
+	    "pgscan_direct=%lu pgsteal_direct=%lu allocstall=%lu",
+	    label, s->pgscan_kswapd, s->pgsteal_kswapd,
+	    s->pgscan_direct, s->pgsteal_direct, s->allocstall);
 }
 
 static void short_snap(const char *label)
@@ -323,9 +349,11 @@ static void short_snap(const char *label)
 
 	take_snap(&s);
 	say("[%s] stored=%.0fM pool=%.0fM swap=%.0fM wb=%lu swapped=%lu "
-	    "memfree=%.0fM", label, MB(s.stored), MB(s.pool),
+	    "memfree=%.0fM scopes=%lu events=%lu budget=%lu scans=%lu "
+	    "oom_kill=%lu", label, MB(s.stored), MB(s.pool),
 	    KMB(s.swaptotal - s.swapfree), s.wb_payloads, s.sw_entries,
-	    KMB(s.memfree));
+	    KMB(s.memfree), s.wb_scopes, s.wb_events, s.wb_budget,
+	    s.wb_scans, s.oom_kill);
 }
 
 static void dump_file(const char *path)
@@ -883,6 +911,18 @@ static void coverage_skip(const char *what, const char *why)
 static void coverage_expected_skip(const char *what, const char *why)
 {
 	say("COVERAGE: SKIP (expected) %s: %s", what, why);
+}
+
+static bool check_soft_dirty(const char *what)
+{
+	/* The arm64 guest kernel lacks HAVE_ARCH_SOFT_DIRTY. Keep x86 strict. */
+#if defined(__aarch64__)
+	coverage_skip(what, "arm64 guest kernel lacks soft-dirty PTE support");
+	return false;
+#else
+	(void)what;
+	return true;
+#endif
 }
 
 static void header(const char *name)
@@ -2523,6 +2563,7 @@ int main(int argc, char **argv)
 		    "(CONFIG_MEMCOMP_DEBUG_STATS off?)");
 	read_file("/proc/sys/vm/min_free_kbytes", sbuf, sizeof(sbuf));
 	say("min_free_kbytes: %.*s", (int)strcspn(sbuf, "\n"), sbuf);
+	dump_file("/proc/zoneinfo");
 	say("params: FILL_MB=%lu PRESS_MB=%lu CHUNK_MB=%lu PAGEOUT_LAG=%lu "
 	    "PACE_US=%lu DRAIN_MS=%lu WB_WAIT_S=%lu CYCLES=%lu REFAULT_PCT=%lu "
 	    "REDIRTY_PCT=%lu CONC_SECS=%lu CONC_THREADS=%lu CONC_K=%lu "

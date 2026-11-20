@@ -149,7 +149,7 @@ def major_verdict(before, after):
     return {'major_delta': delta, 'major_samples': {'before': before, 'after': after}}
 
 
-def evaluate(text, binding, supervisor, supervisor_rc):
+def evaluate(text, binding, supervisor, supervisor_rc, *, drain=DRAIN):
     """Collector verdict, not independent kernel-source provenance approval."""
     try:
         require(supervisor_rc == 0, 'supervisor nonzero')
@@ -159,7 +159,7 @@ def evaluate(text, binding, supervisor, supervisor_rc):
         diagnostic = DIAGNOSTIC.search(combined)
         require(not diagnostic, 'guest/host diagnostic: ' +
                 (combined[diagnostic.start():].splitlines()[0][:240] if diagnostic else ''))
-        require(supervisor.splitlines().count(DRAIN) == 1, 'missing/duplicate owned drain')
+        require(supervisor.splitlines().count(drain) == 1, 'missing/duplicate owned drain')
         records = [json.loads(l[4:]) for l in text.splitlines() if l.startswith('S08 ')]
         require(records and records[0].get('event') == 'environment', 'missing environment')
         env = records.pop(0)
